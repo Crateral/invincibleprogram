@@ -6,21 +6,26 @@
     <div class="login-register">
         <div class="login-box card">
             <div class="card-body">
-                <form class="form-horizontal form-material" id="loginform" action="index.html">
+                <form ngNativeValidate [formGroup]="forma" (ngSubmit)="crearUsuario()" class="form-horizontal form-material" id="loginform" action="index.html">
                     <h3 class="box-title m-b-20">Crear Usuario</h3>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input class="form-control" type="text" required="" placeholder="Nombre">
+                            <input formControlName="nombre" name="nombre" class="form-control" type="text" required placeholder="Nombre">
                         </div>
                     </div>
                     <div class="form-group ">
                         <div class="col-xs-12">
-                            <input class="form-control" type="text" required="" placeholder="Correo">
+                            <input formControlName="email" name="email" class="form-control" type="text" required placeholder="Correo">
                         </div>
                     </div>
                     <div class="form-group ">
                         <div class="col-xs-12">
-                            <input class="form-control" type="password" required="" placeholder="Contraseña">
+                            <input formControlName="password" name="password" class="form-control" type="password" required placeholder="Contraseña">
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <input formControlName="plan" name="plan" class="form-control" type="text" required placeholder="Plan">
                         </div>
                     </div>
                     <!-- <div class="form-group">

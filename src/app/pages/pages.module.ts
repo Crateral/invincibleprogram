@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ChartsModule } from 'ng2-charts';
 
@@ -36,6 +36,7 @@ import { RegisterComponent } from './register/register.component';
         SharedModule,
         PAGES_ROUTES,
         FormsModule,
+        ReactiveFormsModule,
         ChartsModule
     ]
 })

@@ -1,0 +1,16 @@
+export class Usuario {
+
+    constructor(
+        public nombre: string,
+        public email: string,
+        public password: string,
+        public fechaInscripcion: string,
+        public plan: string,
+        public img?: string,
+        public rol?: string,
+        public _id?: string
+    ) {
+        
+    }
+
+}
