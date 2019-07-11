@@ -7,11 +7,12 @@ export class SidebarService {
 
   menu: any = [
     {
-      titulo: 'Principal',
+      titulo: 'Administracion',
       icono: 'mdi mdi-gauge',
       submenu: [
-        { titulo: 'Crear Usuarios', url: '/crearUsuario' },
-        { titulo: 'Administrar Usuarios', url: '/progress' }
+        { titulo: 'Administrar Usuarios', url: '/administrarUsuarios' },
+        { titulo: 'Administrar Planes', url: '/administrarPlanes' },
+        { titulo: 'Administrar Clases', url: '/administrarClases' }
       ]
     },
     {

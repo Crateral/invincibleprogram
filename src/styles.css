@@ -7,3 +7,20 @@
 .pointer {
     cursor: pointer;
 }
+
+.w150 {
+    width: 150px;
+}
+
+@media all and (min-width: 768px) {
+    tr {
+        td {
+            vertical-align: middle !important;
+        }
+        span {
+            &:not([class]) {
+                padding: 1rem 1rem;
+            }
+        }
+    }
+}

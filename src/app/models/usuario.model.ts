@@ -6,11 +6,11 @@ export class Usuario {
         public password: string,
         public fechaInscripcion: string,
         public plan: string,
+        public estado?: string,
         public img?: string,
         public rol?: string,
         public _id?: string
     ) {
-        
     }
 
 }

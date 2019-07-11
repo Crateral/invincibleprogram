@@ -16,6 +16,9 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { RegisterComponent } from './register/register.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { ProfileComponent } from './profile/profile.component';
+import { CommonModule } from '@angular/common';
+import { PlanesComponent } from './planes/planes.component';
+import { ClasesComponent } from './clases/clases.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +30,9 @@ import { ProfileComponent } from './profile/profile.component';
         GraficoDonaComponent,
         AccountSettingsComponent,
         RegisterComponent,
-        ProfileComponent
+        ProfileComponent,
+        PlanesComponent,
+        ClasesComponent
     ],
     exports: [
         PagesComponent,
@@ -41,7 +46,8 @@ import { ProfileComponent } from './profile/profile.component';
         FormsModule,
         ReactiveFormsModule,
         ChartsModule,
-        PipesModule
+        PipesModule,
+        CommonModule
     ]
 })
 

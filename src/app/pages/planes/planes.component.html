@@ -1,0 +1,86 @@
+<div class="row animated fadeIn">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <form ngNativeValidate [formGroup]="formaC" (ngSubmit)="crearPlan()" class="form p-t-20" action="index.html">
+                    <h3 class="card-title box-title m-b-20">Crear Plan</h3>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre del plan</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="mdi mdi-book-open-page-variant"></i></div>
+                            <input formControlName="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre del plan" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd1">Valor</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-money"></i></div>
+                            <input formControlName="valor" name="valor" class="form-control" type="text" required placeholder="Valor">
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center p-b-20">
+                        <div class="col-xs-12">
+                            <button class="btn btn-info btn-lg btn-block btn-rounded text-uppercase waves-effect waves-light" type="submit">Crear</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <form class="form p-t-20">
+                    <h3 class="card-title box-title m-b-20">Actualizar Planes</h3>
+                    <input #input (keyup)="buscarPlan(input.value)" type="text" class="form-control" placeholder="Buscar plan...">
+
+                    <div class="alert alert-warning text-center" *ngIf="cargando">
+                        <strong>Cargando</strong>
+                        <br>
+                        <i class="fa fa-refresh fa-spin fa-2x"></i>
+                        <br>
+                        <span>Espere por favor</span>
+                    </div>
+
+                    <br>
+                    <br>
+
+                    <div [formGroup]="formaA" *ngIf="!cargando">
+                        <h4>Planes creados (<small>{{totalRegistros}}</small>)</h4>
+
+                        <table class="table table-hover color-table dark-table table-responsive-md">
+                            <thead>
+                                <th>Nombre</th>
+                                <th>Valor</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let plan of planes">
+                                    <td>{{plan.nombre}}</td>
+                                    <td>{{plan.valor}}</td>
+                                    <td>
+                                        <button class="btn btn-primary">
+                                            <i class="mdi mdi-border-color"></i>
+                                        </button>
+                                        <button (click)="eliminarPlan( plan)" class="btn btn-danger">
+                                                <i class="fa fa fa-window-close"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <button (click)="cambiarDesde(-5)" class="btn btn-secondary">
+                            Anteriores
+                        </button>
+                        <button (click)="cambiarDesde(5)" class="btn btn-secondary">
+                                Siguientes
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
