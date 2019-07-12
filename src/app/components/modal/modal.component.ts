@@ -43,9 +43,8 @@ export class ModalComponent implements OnInit {
     if (this.formaC.value.valor){
       nuevoValor = this.formaC.value.valor;
     }
-      console.log(nuevoNombre);
-      console.log(nuevoValor);
-
+    
+    
 
   }
 
