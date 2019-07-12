@@ -54,4 +54,6 @@ export class PlanService {
     return this.http.get(url);
   }
 
+  actualizarPlan(){}
+
 }

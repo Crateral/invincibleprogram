@@ -49,7 +49,7 @@
                     <div [formGroup]="formaA" *ngIf="!cargando">
                         <h4>Planes creados (<small>{{totalRegistros}}</small>)</h4>
 
-                        <table class="table table-hover color-table dark-table table-responsive-md">
+                        <table class="table table-hover color-table info-table table-responsive-md">
                             <thead>
                                 <th>Nombre</th>
                                 <th>Valor</th>
@@ -60,7 +60,7 @@
                                     <td>{{plan.nombre}}</td>
                                     <td>{{plan.valor}}</td>
                                     <td>
-                                        <button class="btn btn-primary">
+                                        <button (click)="_modalService.mostrarModal(plan.nombre, plan.valor)" class="btn btn-primary">
                                             <i class="mdi mdi-border-color"></i>
                                         </button>
                                         <button (click)="eliminarPlan( plan)" class="btn btn-danger">

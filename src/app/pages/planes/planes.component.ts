@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { Plan } from '../../models/plan.model';
 import { PlanService } from '../../services/plan/plan.service';
 import swal from 'sweetalert';
+import { ModalService } from '../../components/modal/modal.service';
 
 declare function init_plugins();
 
@@ -22,7 +23,8 @@ export class PlanesComponent implements OnInit {
   totalRegistros: number = 0;
   cargando: boolean = true;
 
-  constructor(public _planService: PlanService) { }
+  constructor(public _planService: PlanService,
+              public _modalService: ModalService) { }
 
   ngOnInit() {
     init_plugins();

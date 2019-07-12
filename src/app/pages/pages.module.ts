@@ -19,6 +19,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from '@angular/common';
 import { PlanesComponent } from './planes/planes.component';
 import { ClasesComponent } from './clases/clases.component';
+import { ModalComponent } from '../components/modal/modal.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { ClasesComponent } from './clases/clases.component';
         RegisterComponent,
         ProfileComponent,
         PlanesComponent,
-        ClasesComponent
+        ClasesComponent,
+        ModalComponent
     ],
     exports: [
         PagesComponent,
