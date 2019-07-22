@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { Plan } from '../../models/plan.model';
 import { PlanService } from '../../services/plan/plan.service';
 import swal from 'sweetalert';
+import { ModalUsuarioService } from '../../components/modals/modalUsuario/modalUsuario.service';
 
 declare function init_plugins();
 
@@ -22,10 +23,13 @@ export class RegisterComponent implements OnInit {
   desde: number = 0;
   totalRegistros: number = 0;
   cargando: boolean = true;
+  imagenSubir: File;
+  imagenTemp: any;
 
   constructor(
     public _usuarioService: UsuarioService,
-    public _planService: PlanService
+    public _planService: PlanService,
+    public _modalService: ModalUsuarioService
   ) { }
 
   ngOnInit() {
@@ -35,16 +39,30 @@ export class RegisterComponent implements OnInit {
       nombre: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, Validators.required),
-      planC: new FormControl(null, Validators.required)
+      planC: new FormControl(null, Validators.required),
+      cedula: new FormControl(null, Validators.required),
+      fechaNacimiento: new FormControl(null, Validators.required)
     });
 
     this.formaA = new FormGroup({
       plan: new FormControl(null, Validators.required)
     });
+    
+    this._modalService.notificacion.subscribe( (resp: any) => {
+      this.cargarUsuarios();
+    });
 
     this.cargarPlanes();
     this.cargarUsuarios();
     
+  }
+
+  cargarStorage(){
+    if(localStorage.getItem('token')){
+      this._usuarioService.usuario = JSON.parse(localStorage.getItem('usuario'));
+    }else{
+      this._usuarioService.usuario = null;
+    }
   }
 
   crearUsuario(){
@@ -53,11 +71,19 @@ export class RegisterComponent implements OnInit {
         return;
     }
 
+    let fecha: Date;
+    fecha = new Date();
+    let fechaFinPlan = fecha.setDate(fecha.getDate() + 30);
+    console.log(fechaFinPlan);
+
     let usuario = new Usuario(this.formaC.value.nombre,
                                this.formaC.value.email, 
                                this.formaC.value.password,
-                               new Date().getDate().toString(),
-                               this.formaC.value.planC);
+                               this.formaC.value.planC,
+                               this.formaC.value.cedula,
+                               this.formaC.value.fechaNacimiento);
+
+    
 
     this._usuarioService.crearUsuario(usuario)
                         .subscribe( resp => {

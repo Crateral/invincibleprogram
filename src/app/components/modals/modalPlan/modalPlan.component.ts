@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PlanService } from '../../services/plan/plan.service';
-import { ModalService } from './modal.service';
+import { PlanService } from '../../../services/plan/plan.service';
+import { ModalPlanService } from './modalPlan.service';
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
+  selector: 'app-modal-plan',
+  templateUrl: './modalPlan.component.html',
   styles: []
 })
 
-export class ModalComponent implements OnInit {
+export class ModalPlanComponent implements OnInit {
 
   formaC: FormGroup;
 
   constructor(
     public _planService: PlanService,
-    public _modalService: ModalService
+    public _modalService: ModalPlanService
   ) { }
 
   ngOnInit() {
@@ -43,8 +43,6 @@ export class ModalComponent implements OnInit {
     if (this.formaC.value.valor){
       nuevoValor = this.formaC.value.valor;
     }
-    
-    
 
   }
 

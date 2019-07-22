@@ -85,6 +85,7 @@ export class UsuarioService{
   }
 
   actualizarUsuario(usuario: Usuario){
+    
     let url = URL_SERVICIOS + '/usuario/' + usuario._id + '?token=' + this.token;
 
     return this.http.put(url, usuario).map((resp: any) =>{
@@ -108,7 +109,6 @@ export class UsuarioService{
                               .catch(resp =>{
                                 console.log(resp);
                               });
-
   }
 
   cargarUsuarios(desde: number = 0){

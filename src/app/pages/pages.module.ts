@@ -19,7 +19,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from '@angular/common';
 import { PlanesComponent } from './planes/planes.component';
 import { ClasesComponent } from './clases/clases.component';
-import { ModalComponent } from '../components/modal/modal.component';
+import { ModalPlanComponent } from '../components/modals/modalPlan/modalPlan.component';
+import { ModalUsuarioComponent } from '../components/modals/modalUsuario/modalUsuario.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { ModalComponent } from '../components/modal/modal.component';
         ProfileComponent,
         PlanesComponent,
         ClasesComponent,
-        ModalComponent
+        ModalPlanComponent,
+        ModalUsuarioComponent
     ],
     exports: [
         PagesComponent,

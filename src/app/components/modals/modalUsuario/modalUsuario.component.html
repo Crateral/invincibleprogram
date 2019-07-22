@@ -1,0 +1,74 @@
+<div class="fondo-negro animated fadeIn" [ngClass]="_modalService.oculto">
+    <div class="modal" style="display: block" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualizar Usuario</h5>
+                    <button (click)="_modalService.ocultarModal()" type="button" class="close" aria-label="Cerrar">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+
+
+                <div class="modal-body">
+                    <form ngNativeValidate [formGroup]="formaC" class="form p-t-20">
+                        <div class="form-group">
+                            <label for="exampleInputuname">Nombre de usuario</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input formControlName="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre de usuario" [value]="_modalService.usuario.nombre" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Cedula</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-address-card-o"></i>
+                                </div>
+                                <input formControlName="cedula" name="cedula" class="form-control" type="number" required placeholder="Cedula" [value]="_modalService.usuario.cedula">
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="col-xs-12">
+                                <label for="exampleInputEmail1">Correo</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="ti-email"></i></div>
+                                    <input formControlName="email" name="email" type="email" class="form-control" placeholder="Correo" [value]="_modalService.usuario.email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="pwd1">Plan</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="ti-view-list-alt"></i>
+                                </div>
+                                <select formControlName="planC" name="planC" class="form-control custom-select" [value]="_modalService.usuario.plan._id">
+                                    <option *ngFor="let plan of planes" [value]="plan._id">
+                                        {{plan.nombre}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" align="center">
+                            <label for="pwd1">Fotografia</label>
+                            <div>
+                                <img *ngIf="!imagenTemp" [src]="_modalService.usuario.img | imagen" class="w150">
+                                <img *ngIf="imagenTemp" [src]="imagenTemp" class="w150">
+                                <div class="form-group">
+                                    <input (change)="seleccionImagen($event.target.files[0])" type="file">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button (click)="actualizarUsuario()" type="button" class="btn btn-primary">Guardar Cambios</button>
+                    <button (click)="_modalService.ocultarModal()" type="button" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

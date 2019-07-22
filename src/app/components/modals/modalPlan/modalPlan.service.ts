@@ -3,7 +3,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class ModalService {
+export class ModalPlanService {
 
   nombrePlan: string;
   valorPlan: string;

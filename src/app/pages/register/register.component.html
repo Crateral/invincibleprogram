@@ -11,12 +11,31 @@
                             <input formControlName="nombre" name="nombre" type="text" class="form-control" id="exampleInputuname" placeholder="Nombre de usuario" required>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label>Cedula</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-address-card-o"></i>
+                            </div>
+                            <input formControlName="cedula" name="cedula" class="form-control" type="number" required placeholder="Cedula">
+                        </div>
+                    </div>
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <label for="exampleInputEmail1">Correo</label>
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="ti-email"></i></div>
-                                <input formControlName="email" name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Correo">
+                                <input formControlName="email" name="email" type="email" class="form-control" placeholder="Correo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-xs-12">
+                            <label>Fecha Naciemiento</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-email"></i></div>
+
+                                <input formControlName="fechaNacimiento" name="fechaNacimiento" type="date" class="form-control" placeholder="dd/mm/aaaa">
                             </div>
                         </div>
                     </div>
@@ -31,7 +50,9 @@
                     <div class="form-group ">
                         <label for="pwd1">Plan</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="ti-view-list-alt"></i></div>
+                            <div class="input-group-addon">
+                                <i class="ti-view-list-alt"></i>
+                            </div>
                             <select formControlName="planC" name="planC" class="form-control custom-select">
                                     <option *ngFor="let plan of planes" [value]="plan._id">
                                             {{plan.nombre}}
@@ -72,6 +93,7 @@
 
                         <table class="table table-hover color-table dark-table">
                             <thead>
+                                <th class="text-center">Imagen</th>
                                 <th class="text-center">Nombre</th>
                                 <th class="text-center">Plan</th>
                                 <th class="text-center">Estado</th>
@@ -79,22 +101,15 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let usuario of usuarios">
+                                    <td class="w70">
+                                        <img [src]="usuario.img | imagen" class="img-50">
+                                    </td>
                                     <td>{{usuario.nombre}}</td>
-                                    <select formControlName="plan" name="plan" class="form-control custom-select" [value]="usuario.plan._id">
-                                        <option *ngFor="let plan of planes" [value]="plan._id">
-                                                {{plan.nombre}}
-                                        </option>
-                                    </select>
+                                    <td>{{usuario.plan.nombre}}</td>
                                     <td>{{usuario.estado}}</td>
                                     <td>
-                                        <button (click)="actualizarPlan(usuario)" class="btn btn-primary">
-                                            <i class="fa fa-save"></i>
-                                        </button>
-                                        <button (click)="cambiarEstadoUsuario( usuario, 'Activar' )" class="btn btn-success">
-                                                <i class="fa fa-check"></i>
-                                        </button>
-                                        <button (click)="cambiarEstadoUsuario( usuario, 'Inactivar' )" class="btn btn-danger">
-                                                <i class="fa fa fa-window-close"></i>
+                                        <button (click)="_modalService.mostrarModal(usuario)" class="btn btn-primary">
+                                            <i class="mdi mdi-border-color"></i>
                                         </button>
                                     </td>
                                 </tr>

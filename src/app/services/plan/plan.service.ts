@@ -36,8 +36,8 @@ export class PlanService {
   }
 
   crearPlan(plan: Plan){
-    let url = URL_SERVICIOS + '/plan' + '?token=' + this.token;;
-  
+    let url = URL_SERVICIOS + '/plan' + '?token=' + this.token;
+
     return this.http.post(url, plan)
                     .map((resp: any) =>{
                       swal('Plan creado correctamente', '', 'success');

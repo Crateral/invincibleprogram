@@ -5,7 +5,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { Plan } from '../../models/plan.model';
 import { PlanService } from '../../services/plan/plan.service';
 import swal from 'sweetalert';
-import { ModalService } from '../../components/modal/modal.service';
+import { ModalPlanService } from '../../components/modals/modalPlan/modalPlan.service';
 
 declare function init_plugins();
 
@@ -24,7 +24,7 @@ export class PlanesComponent implements OnInit {
   cargando: boolean = true;
 
   constructor(public _planService: PlanService,
-              public _modalService: ModalService) { }
+              public _modalService: ModalPlanService) { }
 
   ngOnInit() {
     init_plugins();
