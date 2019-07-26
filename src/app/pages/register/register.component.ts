@@ -17,7 +17,6 @@ declare function init_plugins();
 export class RegisterComponent implements OnInit {
 
   formaC: FormGroup;
-  formaA: FormGroup;
   usuarios: Usuario[] = [];
   planes: Plan[] = [];
   desde: number = 0;
@@ -25,6 +24,8 @@ export class RegisterComponent implements OnInit {
   cargando: boolean = true;
   imagenSubir: File;
   imagenTemp: any;
+  totalValorPlan: number;
+  porcentajeDescuento: number = 0;
 
   constructor(
     public _usuarioService: UsuarioService,
@@ -41,11 +42,14 @@ export class RegisterComponent implements OnInit {
       password: new FormControl(null, Validators.required),
       planC: new FormControl(null, Validators.required),
       cedula: new FormControl(null, Validators.required),
-      fechaNacimiento: new FormControl(null, Validators.required)
-    });
-
-    this.formaA = new FormGroup({
-      plan: new FormControl(null, Validators.required)
+      fechaNacimiento: new FormControl(null, Validators.required),
+      telefono: new FormControl(null, Validators.required),
+      direccion:  new FormControl(null, Validators.required),
+      rh: new FormControl(null,Validators.required),
+      nombreContacto: new FormControl(null, Validators.required),
+      telefonoContacto: new FormControl(null, Validators.required),
+      descuento: new FormControl(null, Validators.required),
+      porcentajeDescuento: new FormControl(null, Validators.maxLength(3))
     });
     
     this._modalService.notificacion.subscribe( (resp: any) => {
@@ -54,7 +58,7 @@ export class RegisterComponent implements OnInit {
 
     this.cargarPlanes();
     this.cargarUsuarios();
-    
+
   }
 
   cargarStorage(){
@@ -72,16 +76,39 @@ export class RegisterComponent implements OnInit {
     }
 
     let fecha: Date;
+    let valor: number;
     fecha = new Date();
     let fechaFinPlan = fecha.setDate(fecha.getDate() + 30);
-    console.log(fechaFinPlan);
+
+     for ( let i= 0; i < this.planes.length; i++ ) {
+        if (this.planes[i]._id === this.formaC.value.planC){
+          valor = this.planes[i].valor;
+          break;
+        }
+     }
+
+    if (this.formaC.value.descuento){
+      this.porcentajeDescuento = this.formaC.value.porcentajeDescuento;
+      this.totalValorPlan = valor - ((this.porcentajeDescuento/100) * valor);
+    } else {
+      this.totalValorPlan = valor;
+    }
 
     let usuario = new Usuario(this.formaC.value.nombre,
-                               this.formaC.value.email, 
+                               this.formaC.value.email,
                                this.formaC.value.password,
                                this.formaC.value.planC,
                                this.formaC.value.cedula,
-                               this.formaC.value.fechaNacimiento);
+                               this.formaC.value.fechaNacimiento,
+                               this.formaC.value.telefono,
+                               this.formaC.value.direccion,
+                               this.formaC.value.rh,
+                               this.formaC.value.nombreContacto,
+                               this.formaC.value.telefonoContacto,
+                               this.formaC.value.descuento,
+                               this.porcentajeDescuento,
+                               this.totalValorPlan,
+                               );
 
     
 
@@ -184,17 +211,4 @@ export class RegisterComponent implements OnInit {
     }
 
   }
-
-  actualizarPlan(usuario: Usuario){
-
-    usuario.plan = this.formaA.value.plan;
-
-    this._usuarioService.actualizarUsuario(usuario)
-                            .subscribe((resp: any) => {
-                              this.cargarUsuarios();
-                            });
-
-    console.log(usuario);
-  }
-
 }

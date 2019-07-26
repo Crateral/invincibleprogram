@@ -1,0 +1,46 @@
+<div class="fondo-negro animated fadeIn" [ngClass]="_modalService.oculto">
+    <div class="modal" style="display: block" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crear Clase</h5>
+                    <button (click)="_modalService.ocultarModal()" type="button" class="close" aria-label="Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                </div>
+                <div class="modal-body">
+                    <form ngNativeValidate [formGroup]="formaC" (ngSubmit)="actualizarClase()" class="form p-t-20" action="index.html">
+                        <div class="form-group">
+                            <label for="exampleInputuname">Descripcion</label>
+                            <div class="input-group">
+                                <input formControlName="descripcion" name="descripcion" type="text" class="form-control" placeholder="Descripcion" required [value]="_modalService.clase.descripcion">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd1">Coach</label>
+                            <div class="input-group">
+                                <input formControlName="coach" name="coach" class="form-control" type="text" placeholder="Coach" required [value]="_modalService.clase.coach">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd1">Cupo</label>
+                            <div class="input-group">
+                                <input formControlName="cupo" name="cupo" class="form-control" type="text" placeholder="Cupo" required [value]="_modalService.clase.cupo">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd1">Wod</label>
+                            <div class="input-group">
+                                <textarea formControlName="wod" name="wod" class="form-control" rows="5" [value]="_modalService.clase.wod"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="actualizarClase()" type="button" class="btn btn-primary">Actualizar</button>
+                    <button (click)="_modalService.ocultarModal()" type="button" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -54,6 +54,30 @@ export class PlanService {
     return this.http.get(url);
   }
 
-  actualizarPlan(){}
+  actualizarPlan(plan: Plan){
+
+    this.cargarStorage();
+    
+    let url = URL_SERVICIOS + '/plan/' + plan._id + '?token=' + this.token;
+
+    return this.http.put(url, plan).map((resp: any) =>{
+      swal('Plan actulizado', '', 'success');
+      return true;
+    });
+
+  }
+
+  borrarPlan(plan: Plan){
+
+    this.cargarStorage();
+    
+    let url = URL_SERVICIOS + '/plan/' + plan._id + '?token=' + this.token;
+
+    return this.http.delete(url).map((resp: any) =>{
+      swal('Plan eliminado', '', 'success');
+      return true;
+    });
+
+  }
 
 }

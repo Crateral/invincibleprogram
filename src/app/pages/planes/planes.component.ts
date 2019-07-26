@@ -17,7 +17,6 @@ declare function init_plugins();
 export class PlanesComponent implements OnInit {
 
   formaC: FormGroup;
-  formaA: FormGroup;
   planes: Plan[] = [];
   desde: number = 0;
   totalRegistros: number = 0;
@@ -31,12 +30,12 @@ export class PlanesComponent implements OnInit {
 
     this.formaC = new FormGroup({
       nombre: new FormControl(null, Validators.required),
-      valor: new FormControl(null, Validators.required)
+      valor: new FormControl(null, Validators.required),
+      descripcion: new FormControl(null, null),
     });
 
-    this.formaA = new FormGroup({
-      nombreA: new FormControl(null, Validators.required),
-      valor: new FormControl(null, Validators.required)
+    this._modalService.notificacion.subscribe( (resp: any) => {
+      this.cargarPlanes();
     });
 
     this.cargarPlanes();
@@ -47,7 +46,8 @@ export class PlanesComponent implements OnInit {
       return;
     }
     let plan = new Plan(this.formaC.value.nombre,
-    this.formaC.value.valor);
+                        this.formaC.value.valor,
+                        this.formaC.value.descripcion);
 
     this._planService.crearPlan(plan)
                         .subscribe( resp => {
@@ -83,7 +83,9 @@ export class PlanesComponent implements OnInit {
   }
 
   eliminarPlan(plan: Plan){
-
+    this._planService.borrarPlan(plan).subscribe( resp => {
+      this.cargarPlanes();
+    });
   }
 
   buscarPlan(termino: string){

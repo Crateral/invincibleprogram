@@ -11,8 +11,8 @@ import { LoginGuardGuard } from './guards/login-guard.guard';
     HttpClientModule
   ],
   providers: [
-    SettingsService, 
-    SharedService, 
+    SettingsService,
+    SharedService,
     SidebarService,
     UsuarioService,
     LoginGuardGuard

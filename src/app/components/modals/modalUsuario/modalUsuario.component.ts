@@ -34,17 +34,25 @@ export class ModalUsuarioComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, Validators.required),
       planC: new FormControl(null, Validators.required),
-      cedula: new FormControl(null, Validators.required)
+      cedula: new FormControl(null, Validators.required),
+      fechaNacimiento: new FormControl(null, Validators.required),
+      telefono: new FormControl(null, Validators.required),
+      direccion:  new FormControl(null, Validators.required),
+      rh: new FormControl(null,Validators.required),
+      nombreContacto: new FormControl(null, Validators.required),
+      telefonoContacto: new FormControl(null, Validators.required),
+      descuento: new FormControl(null, Validators.required),
+      porcentajeDescuento: new FormControl(null, Validators.maxLength(3))
     });
 
     this.cargarPlanes();
+    
   }
 
   cargarPlanes() {
     this._planService.cargarPlanes(0)
                       .subscribe((resp: any) =>{
                         this.planes = resp.planes;
-                        console.log(resp);
                       });
   }
 
@@ -73,38 +81,115 @@ export class ModalUsuarioComponent implements OnInit {
   actualizarUsuario(){
 
     let nuevoNombre: string;
-    let nuevoEmail: string;
     let nuevaCedula: string;
+    let nuevoEmail: string;
+    let nuevoTelefono: string;
+    let nuevaDireccion: string;
+    let nuevaFechaNaciemiento: string;
+    let nuevoRH: string;
     let nuevoPlan: any;
+    let nuevoNombreContacto: string;
+    let nuevoTelefonoContacto: string;
+    let nuevoDescuento: boolean;
+    let nuevoPorcentajeDescuento: number;
+    let nuevoTotalValorPlan: number;
+    
 
     if(this.formaC.value.nombre){
       nuevoNombre = this.formaC.value.nombre;
     }else{
       nuevoNombre = this._modalService.usuario.nombre;
     }
+
     if(this.formaC.value.email){
       nuevoEmail = this.formaC.value.email;
     }else{
       nuevoEmail = this._modalService.usuario.email;
     }
+
     if(this.formaC.value.planC){
       nuevoPlan = this.formaC.value.planC;
     }else{
       nuevoPlan = this._modalService.usuario.plan;
     }
+
     if(this.formaC.value.cedula){
       nuevaCedula = this.formaC.value.cedula;
     }else{
       nuevaCedula = this._modalService.usuario.cedula;
     }
-    console.log(this.formaC.value.cedula);
+
+    if(this.formaC.value.fechaNacimiento){
+      nuevaFechaNaciemiento = this.formaC.value.fechaNacimiento;
+    }else{
+      nuevaFechaNaciemiento = this._modalService.usuario.fechaNacimiento;
+    }
+
+    if(this.formaC.value.telefono){
+      nuevoTelefono = this.formaC.value.telefono;
+    }else{
+      nuevoTelefono = this._usuarioService.usuario.telefono;
+    }
+
+    if(this.formaC.value.direccion){
+      nuevaDireccion = this.formaC.value.direccion;
+    }else{
+      nuevaDireccion = this._modalService.usuario.direccion;
+    }
+
+    if(this.formaC.value.rh){
+      nuevoRH = this.formaC.value.rh;
+    }else{
+      nuevoRH = this._modalService.usuario.rh;
+    }
+
+    if(this.formaC.value.nombreContacto){
+      nuevoNombreContacto = this.formaC.value.nombreContacto;
+    }else{
+      nuevoNombreContacto = this._modalService.usuario.nombreContacto;
+    }
+
+    if(this.formaC.value.telefonoContacto){
+      nuevoTelefonoContacto = this.formaC.value.telefonoContacto;
+    }else{
+      nuevoTelefonoContacto = this._modalService.usuario.telefonoContacto;
+    }
+
+    if(this.formaC.value.descuento){
+      nuevoDescuento = this.formaC.value.descuento;
+    }else{
+      nuevoDescuento = this._modalService.usuario.descuento;
+    }
+
+    if(nuevoDescuento){
+      if(this.formaC.value.porcentajeDescuento){
+        nuevoPorcentajeDescuento = this.formaC.value.porcentajeDescuento;
+        nuevoTotalValorPlan = this._modalService.usuario.plan.valor - ((nuevoPorcentajeDescuento/100) * this._modalService.usuario.plan.valor);
+      }else{
+        nuevoPorcentajeDescuento = this._modalService.usuario.porcentajeDescuento;
+        nuevoTotalValorPlan = this._modalService.usuario.plan.valor - ((nuevoPorcentajeDescuento/100) * this._modalService.usuario.plan.valor);
+      }
+    }else{
+      nuevoPorcentajeDescuento = 0;
+      nuevoTotalValorPlan = this._modalService.usuario.plan.valor;
+    }
+
+    console.log(nuevoTelefono);
 
     let usuario = new Usuario(nuevoNombre,
-                              nuevoEmail, 
+                              nuevoEmail,
                               null,
                               nuevoPlan,
                               nuevaCedula,
-                              null);
+                              nuevaFechaNaciemiento,
+                              nuevoTelefono,
+                              nuevaDireccion,
+                              nuevoRH,
+                              nuevoNombreContacto,
+                              nuevoTelefonoContacto,
+                              nuevoDescuento,
+                              nuevoPorcentajeDescuento,
+                              nuevoTotalValorPlan);
     
     usuario._id = this._modalService.usuario._id;
 
@@ -124,5 +209,9 @@ export class ModalUsuarioComponent implements OnInit {
     this._modalService.ocultarModal();
   }
 
+  actualizarDescuento(evento: any){
+    console.log(evento);
+    this._modalService.usuario.descuento = evento;
+  }
 
 }

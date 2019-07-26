@@ -16,12 +16,12 @@ export class ModalUsuarioService {
 
   constructor(
   ) {
-    this.usuario = new Usuario(null,null,null,new Plan(null,null),null,null);
+    this.usuario = new Usuario(null,null,null,new Plan(null,null),null,null, null, null, null, null, null, null);
    }
 
   ocultarModal(){
     this.oculto = 'oculto';
-    this.usuario = new Usuario(null,null,null, new Plan(null,null),null,null);
+    this.usuario = new Usuario(null,null,null,new Plan(null,null),null,null, null, null, null, null, null, null);
   }
 
   mostrarModal(usuario: Usuario){

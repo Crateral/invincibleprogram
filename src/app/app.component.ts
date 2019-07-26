@@ -7,7 +7,7 @@ import { SettingsService } from './services/service.index';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'adminpro';
+  title = 'Bengala Fit Club';
 
   constructor(public _ajustes: SettingsService){
 

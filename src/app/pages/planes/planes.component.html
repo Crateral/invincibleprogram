@@ -7,15 +7,19 @@
                     <div class="form-group">
                         <label for="exampleInputuname">Nombre del plan</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="mdi mdi-book-open-page-variant"></i></div>
                             <input formControlName="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre del plan" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="pwd1">Valor</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="fa fa-money"></i></div>
                             <input formControlName="valor" name="valor" class="form-control" type="text" required placeholder="Valor">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd1">Descripcion</label>
+                        <div class="input-group">
+                            <input formControlName="descripcion" name="descripcion" class="form-control" type="text" required placeholder="Descripcion">
                         </div>
                     </div>
 
@@ -46,7 +50,7 @@
                     <br>
                     <br>
 
-                    <div [formGroup]="formaA" *ngIf="!cargando">
+                    <div *ngIf="!cargando">
                         <h4>Planes creados (<small>{{totalRegistros}}</small>)</h4>
 
                         <table class="table table-hover color-table info-table table-responsive-md">
@@ -60,7 +64,7 @@
                                     <td>{{plan.nombre}}</td>
                                     <td>{{plan.valor}}</td>
                                     <td>
-                                        <button (click)="_modalService.mostrarModal(plan.nombre, plan.valor)" class="btn btn-primary">
+                                        <button (click)="_modalService.mostrarModal(plan)" class="btn btn-primary">
                                             <i class="mdi mdi-border-color"></i>
                                         </button>
                                         <button (click)="eliminarPlan( plan)" class="btn btn-danger">

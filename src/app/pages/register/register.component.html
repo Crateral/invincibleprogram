@@ -7,16 +7,12 @@
                     <div class="form-group">
                         <label for="exampleInputuname">Nombre de usuario</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="ti-user"></i></div>
-                            <input formControlName="nombre" name="nombre" type="text" class="form-control" id="exampleInputuname" placeholder="Nombre de usuario" required>
+                            <input formControlName="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre de usuario" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Cedula</label>
                         <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-address-card-o"></i>
-                            </div>
                             <input formControlName="cedula" name="cedula" class="form-control" type="number" required placeholder="Cedula">
                         </div>
                     </div>
@@ -24,25 +20,39 @@
                         <div class="col-xs-12">
                             <label for="exampleInputEmail1">Correo</label>
                             <div class="input-group">
-                                <div class="input-group-addon"><i class="ti-email"></i></div>
                                 <input formControlName="email" name="email" type="email" class="form-control" placeholder="Correo">
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="pwd1">Telefono</label>
+                        <div class="input-group">
+                            <input formControlName="telefono" name="telefono" type="text" class="form-control" placeholder="Telefono" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Direccion</label>
+                        <div class="input-group">
+                            <input formControlName="direccion" name="direccion" type="text" class="form-control" placeholder="Direccion" required>
                         </div>
                     </div>
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <label>Fecha Naciemiento</label>
                             <div class="input-group">
-                                <div class="input-group-addon"><i class="ti-email"></i></div>
-
                                 <input formControlName="fechaNacimiento" name="fechaNacimiento" type="date" class="form-control" placeholder="dd/mm/aaaa">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputuname">RH</label>
+                        <div class="input-group">
+                            <input formControlName="rh" name="rh" type="text" class="form-control" placeholder="RH" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="pwd1">Contraseña</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="ti-lock"></i></div>
                             <input formControlName="password" name="password" class="form-control" type="password" required placeholder="Contraseña">
                         </div>
                     </div>
@@ -50,14 +60,37 @@
                     <div class="form-group ">
                         <label for="pwd1">Plan</label>
                         <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="ti-view-list-alt"></i>
-                            </div>
-                            <select formControlName="planC" name="planC" class="form-control custom-select">
+                            <select formControlName="planC" name="planC" class="form-control custom-select" id="planC">
                                     <option *ngFor="let plan of planes" [value]="plan._id">
                                             {{plan.nombre}}
                                     </option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        <label for="pwd1">Contacto Emergencia</label>
+                        <div class="input-group">
+                            <input formControlName="nombreContacto" name="nombreContacto" type="text" class="form-control" placeholder="Nombre de contacto" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pwd1">Telefono Contacto Emergencia</label>
+                        <div class="input-group">
+                            <input formControlName="telefonoContacto" name="telefonoContacto" type="text" class="form-control" placeholder="Telefono de contacto" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group checkbox checkbox-primary pull-left p-t-0">
+                            <input formControlName="descuento" name="descuento" id="checkbox-descuento" type="checkbox" class="filled-in chk-col-light-blue">
+                            <label for="checkbox-descuento"> Descuento </label>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="this.formaC.value.descuento">
+                        <label for="pwd1">Porcentaje</label>
+                        <div class="input-group">
+                            <input formControlName="porcentajeDescuento" name="porcentajeDescuento" type="number" class="form-control" placeholder="Porcentaje del descuento">
                         </div>
                     </div>
 
@@ -88,7 +121,7 @@
                     <br>
                     <br>
 
-                    <div [formGroup]="formaA" *ngIf="!cargando">
+                    <div *ngIf="!cargando">
                         <h4>Usuarios registrados (<small>{{totalRegistros}}</small>)</h4>
 
                         <table class="table table-hover color-table dark-table">

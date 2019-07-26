@@ -21,6 +21,8 @@ import { PlanesComponent } from './planes/planes.component';
 import { ClasesComponent } from './clases/clases.component';
 import { ModalPlanComponent } from '../components/modals/modalPlan/modalPlan.component';
 import { ModalUsuarioComponent } from '../components/modals/modalUsuario/modalUsuario.component';
+import { ModalClaseComponent } from '../components/modals/modalClase/modalClase.component';
+import { ModalClaseActualizarComponent } from '../components/modals/modalClase/modalClaseActualizar.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +38,9 @@ import { ModalUsuarioComponent } from '../components/modals/modalUsuario/modalUs
         PlanesComponent,
         ClasesComponent,
         ModalPlanComponent,
-        ModalUsuarioComponent
+        ModalUsuarioComponent,
+        ModalClaseComponent,
+        ModalClaseActualizarComponent
     ],
     exports: [
         PagesComponent,

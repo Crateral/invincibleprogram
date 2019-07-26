@@ -1,28 +1,28 @@
 import { Injectable, EventEmitter } from '@angular/core';
+import { Plan } from '../../../models/plan.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalPlanService {
 
-  nombrePlan: string;
-  valorPlan: string;
+  plan: Plan;
 
   oculto: string = 'oculto';
 
   notificacion = new EventEmitter<any>();
 
-  constructor() { }
+  constructor() {
+    this.plan = new Plan(null, null, null);
+   }
 
   ocultarModal(){
     this.oculto = 'oculto';
-    this.nombrePlan = null;
-    this.valorPlan = null;
+    this.plan = new Plan(null, null, null);
   }
 
-  mostrarModal(nombrePlan: string, valorPlan: string){
+  mostrarModal(plan: Plan){
     this.oculto = '';
-    this.nombrePlan = nombrePlan;
-    this.valorPlan = valorPlan;
+    this.plan = plan;
   }
 }
