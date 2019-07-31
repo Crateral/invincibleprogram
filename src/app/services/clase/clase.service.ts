@@ -25,14 +25,20 @@ export class ClaseService {
     }
   }
 
-  cargarClases() {
+  cargarClases(fechaIni: string, fechaFin: string) {
+      let url = URL_SERVICIOS + '/busqueda/clase/' + fechaIni + '/' + fechaFin;
+      console.log(url);
+      return this.http.get(url);
+   }
 
-    let url = URL_SERVICIOS + '/clase/';
-     return this.http.get(url);
- }
+   cargarClasePorFecha(fechaIni: string, hora: string){
+     console.log(new Date(fechaIni).toISOString(), hora);
+    let url = URL_SERVICIOS + '/busqueda/clase/dia/' + new Date(fechaIni).toISOString() + '/' + hora;
+    console.log(url);
+    return this.http.get(url);
+   }
 
  crearClase(clase: Clase){
-  
     this.cargarStorage();
 
     let url = URL_SERVICIOS + '/clase' + '?token=' + this.token;
@@ -48,7 +54,7 @@ export class ClaseService {
   actualizarClase(clase: Clase){
 
     this.cargarStorage();
-  
+
     let url = URL_SERVICIOS + '/clase/' + clase._id + '?token=' + this.token;
 
     return this.http.put(url, clase).map((resp: any) =>{
@@ -70,5 +76,6 @@ export class ClaseService {
     });
 
   }
+
 
 }

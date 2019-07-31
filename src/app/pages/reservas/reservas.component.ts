@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { HoraService } from '../../services/hora/hora.service';
+import { identifierModuleUrl } from '@angular/compiler';
+import { ReservaService } from '../../services/reserva/reserva.service';
+import { Reserva } from '../../models/reserva.model';
 import { Hora } from 'src/app/models/hora.model';
-import { Clase } from 'src/app/models/clase.model';
-import { ModalClaseService } from '../../components/modals/modalClase/modalClase.service';
-import { ClaseService } from '../../services/clase/clase.service';
-import { ModalClaseActualizarService } from '../../components/modals/modalClase/modalClaseActualizar.service';
+import { HoraService } from 'src/app/services/hora/hora.service';
+import { ModalReservaAdmService } from '../../components/modals/modalReservaAdm/modalReservaAdm.service';
+import { ModalReservaAdmCrearService } from '../../components/modals/modalReservaAdm/modalReservaAdmCrear.service';
 
 @Component({
-  selector: 'app-clases',
-  templateUrl: './clases.component.html'
+  selector: 'app-reservas',
+  templateUrl: './reservas.component.html',
+  styles: []
 })
-export class ClasesComponent implements OnInit {
+export class ReservasComponent implements OnInit {
 
-   DIAS = [
+  DIAS = [
     {id: 1, name: 'Lunes', fecha: ''},
     {id: 2, name: 'Martes', fecha: ''},
     {id: 3, name: 'Miercoles', fecha: ''},
@@ -21,31 +23,68 @@ export class ClasesComponent implements OnInit {
     {id: 6, name: 'Sabado', fecha: ''}
 ];
 
-  fechaInicial: number;
-  fechaFinal: number;
+id: number = 1;
 
-  horas: Hora[] = [];
-  clases: Clase[] = [];
+fecha = new Date();
 
-  constructor(public _horaService: HoraService,
-              public _modalService: ModalClaseService,
-              public _modalActualizarService: ModalClaseActualizarService,
-              public _claseService: ClaseService){
-              } 
+diaActual: number;
 
-  ngOnInit(): void {
+reservas: Reserva[] = new Array();
+
+    reservas6: Reserva[] = new Array();
+    reservas7: Reserva[] = new Array();
+    reservas8: Reserva[] = new Array();
+    reservas9: Reserva[] = new Array();
+    reservas10: Reserva[] = new Array();
+    reservas16: Reserva[] = new Array();
+    reservas17: Reserva[] = new Array();
+    reservas18: Reserva[] = new Array();
+    reservas19: Reserva[] = new Array();
+    reservas20: Reserva[] = new Array();
+    reservas830: Reserva[] = new Array();
+    reservas930: Reserva[] = new Array();
+    reservas1030: Reserva[] = new Array();
+
+fechaInicial: number;
+fechaFinal: number;
+
+horas: Hora[] = [];
+
+  constructor(public _reservaService: ReservaService,
+              public _horaService: HoraService,
+              public _modalService: ModalReservaAdmService,
+              public _modalCrearService: ModalReservaAdmCrearService) { }
+
+  ngOnInit() {
+    //this.fecha.setDate(this.fecha.getDate() + 1)
+    let fechaTmp = this.fecha.getFullYear() + '-' + 0+(this.fecha.getMonth() + 1) + '-' +  this.fecha.getDate();
     this.calcularFechas();
     this.cargarHoras();
-    this.cargarClases();
-    
-    this._modalService.notificacion.subscribe( (resp: any) => {
-      this.cargarClases();
-    });
+    for (const dia of this.DIAS) {
+      if(dia.fecha === fechaTmp){
+        this.obtenerReservasPorFecha(dia.id, fechaTmp);
+        this.diaActual = dia.id;
+        break;
+      }
+    }
+  }
 
-    this._modalActualizarService.notificacion.subscribe( (resp: any) => {
-      this.cargarClases();
-    });
+  obtenerReservasPorFecha(id: number, fecha: string){
+    console.log(fecha)
+    this._reservaService.cargarReservasPorFecha(fecha)
+                        .subscribe((resp: any) =>{
+                            this.reservas = resp.reservas;
+                            this.agruparReservasPorHora(this.reservas);
+                          });
 
+    this.id = id;
+  }
+
+  monstrarTab(id){
+    if(this.id === id){
+      return true;
+    }
+    return false;
   }
 
   calcularFechas(){
@@ -66,7 +105,7 @@ export class ClasesComponent implements OnInit {
       this.fechaFinal = fechaTempFin.getDate();
 
       //CarcgarFechasADias
-      console.log('FECHA ACTUAL: ', new Date().getDate() + '/' + new Date().getMonth()+1 + '/' +  new Date().getFullYear());
+      console.log('FECHA ACTUAL: ', new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' +  new Date().getFullYear());
 
       martes.setDate(new Date().getDate() + 1);
       miercoles.setDate(new Date().getDate() + 2);
@@ -273,43 +312,9 @@ export class ClasesComponent implements OnInit {
                             this.horas = resp.horas;
                           });
   }
- 
-  validarHoras(hora: Hora, dia: string){
-    if (dia === 'sabado') {
-      if (hora.horaInicio === '8:30'){
-        return true;
-      } else if (hora.horaInicio === '9:30') {
-        return true;
-      } else if (hora.horaInicio === '10:30') {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      if (hora.horaInicio === '8:30') {
-        return false;
-      } else if (hora.horaInicio === '9:30') {
-        return false;
-      } else if (hora.horaInicio === '10:30') {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }
-
-  cargarClases() {
-    this._claseService.cargarClases(this.DIAS[0].fecha, this.DIAS[5].fecha)
-                          .subscribe((resp: any) =>{
-                            console.log(this.DIAS[0].fecha, this.DIAS[5].fecha);
-                            this.clases = resp.clases;
-                          });
-  }
 
   cargarFechaEnDia(fechas: any[]){
     for (let i = 0; i < this.DIAS.length; i++) {
-
-      //console.log(fechas[i]);
       if(fechas[i].mes <= 9){
         if(fechas[i].dia <= 9){
           this.DIAS[i].fecha = fechas[i].anio + '-' + 0+fechas[i].mes + '-' + 0+fechas[i].dia;
@@ -326,65 +331,47 @@ export class ClasesComponent implements OnInit {
     }
   }
 
-  buscarFecha(dia: number){
-    for (let i = 0; i < this.DIAS.length; i++) {
-      if(this.DIAS[i].id === dia){
-        return this.DIAS[i].fecha;
+  agruparReservasPorHora(reservas: Reserva[], horaInicio?: string){
+
+    let numeroReserva: number = 0;
+
+    this.reservas6 = new Array();
+    this.reservas7 = new Array();
+    this.reservas8 = new Array();
+    this.reservas9 = new Array();
+    this.reservas10 = new Array();
+    this.reservas16 = new Array();
+    this.reservas17 = new Array();
+    this.reservas18 = new Array();
+    this.reservas19 = new Array();
+    this.reservas20 = new Array();
+    this.reservas830 =  new Array();
+    this.reservas930 =  new Array();
+    this.reservas1030 =  new Array();
+
+    for (const reserva of reservas) {
+      if (reserva.clase.horaInicio === horaInicio) {
+        this.reservas6.push(reserva);
+        numeroReserva = this.reservas6.length;
+      } else if (reserva.clase.horaInicio === horaInicio){
+        this.reservas7.push(reserva);
+        numeroReserva = this.reservas7.length;
+      } else {
+        numeroReserva = 0;
       }
     }
-  }
-  validarClase(hora: Hora, dia: any, boton: string){
-    
-    //console.log(this.existeClase(hora, dia) + '-----' + boton)
-
-    if(this.existeClase(hora, dia) && boton === 'crear'){
-      return 'oculto';
-    }
-
-    if(!this.existeClase(hora, dia) && boton === 'crear'){
-      return '';
-    }
-
-    if(this.existeClase(hora, dia) && boton === 'ver'){
-      return '';
-    }
-
-    if(!this.existeClase(hora, dia) && boton === 'ver'){
-      return 'oculto';
-    }
+    return numeroReserva;
   }
 
-  existeClase(hora: Hora, dia: any){
-    for (const clase of this.clases) {
-      if(clase.fecha.substring(0, 10) === dia.fecha
-        && clase.horaInicio === hora.horaInicio
-        && clase.horaFinal === hora.horaFin)
-      {
-        return true;
+  enviarReservas(reservas: Reserva[], horaInicio?: string){
+    let reservaFinal = new Array();
+
+    for (const reserva of reservas) {
+      if (reserva.clase.horaInicio === horaInicio) {
+        reservaFinal.push(reserva);
       }
     }
-    return false;
-  }
-
-  buscarClase(hora: Hora, dia: any){
-
-    for (const clase of this.clases) {
-      if(clase.fecha.substring(0, 10) === dia.fecha
-        && clase.horaInicio === hora.horaInicio
-        && clase.horaFinal === hora.horaFin)
-      {
-        return clase;
-      }
-    }
-    return new Clase(null, null, null, null, null, null, null);
-  }
-
-  eliminarClase(clase: Clase){
-
-    this._claseService.borrarClase(clase).subscribe( resp => {
-      this.cargarClases();
-    });
-    
+    return reservaFinal;
   }
 
 }

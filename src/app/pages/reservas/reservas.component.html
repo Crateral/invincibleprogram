@@ -1,0 +1,49 @@
+<div class="row animated fadeIn">
+    <div class="col-lg-6 text-center">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h3 class="card-title box-title m-b-20">Reservas del {{fechaInicial}} al {{fechaFinal}}</h3>
+                </div>
+                <ul class="nav nav-tabs customtab" role="tablist">
+                    <li class="nav-item" *ngFor="let dia of DIAS">
+                        <a class="nav-link" data-toggle="tab" [href]="dia.id" role="tab" [ngClass]="{'active': dia.id === diaActual}" [id]="dia.id" (click)="obtenerReservasPorFecha(dia.id, dia.fecha)">
+                            <span class="hidden-sm-up">
+                                <i class="ti-home"></i>
+                            </span>
+                            <span class="hidden-xs-down">{{dia.name}}</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane" *ngFor="let dia of DIAS" [id]="dia.id" role="tabpanel" [ngClass]="{'active': monstrarTab(dia.id)}">
+                        <div class="p-20">
+                            <table class="table table-responsive-md table-hover color-table info-table">
+                                <thead>
+                                    <th>Hora</th>
+                                    <th># Reservas</th>
+                                    <th>Accion</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let hora of horas">
+                                        <td>{{hora.horaInicio}} - {{hora.horaFin}}</td>
+                                        <td>{{agruparReservasPorHora(reservas, hora.horaInicio)}}</td>
+                                        <td>
+                                            <button class="btn btn-success" (click)="_modalCrearService.mostrarModal(hora, dia.fecha)">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                            <button *ngIf="agruparReservasPorHora(reservas, hora.horaInicio) > 0" class="btn btn-info" (click)="_modalService.mostrarModal(enviarReservas(reservas, hora.horaInicio))">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

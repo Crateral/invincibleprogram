@@ -10,6 +10,7 @@ import { LoginGuardGuard } from '../services/guards/login-guard.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { PlanesComponent } from './planes/planes.component';
 import { ClasesComponent } from './clases/clases.component';
+import { ReservasComponent } from './reservas/reservas.component';
 
 
 const pagesRoutes: Routes = [
@@ -26,6 +27,7 @@ const pagesRoutes: Routes = [
             { path: 'administrarUsuarios', component: RegisterComponent, data: {titulo: 'Administacion de usuarios'} },
             { path: 'administrarPlanes', component: PlanesComponent, data: {titulo: 'Administracion de planes'}},
             { path: 'administrarClases', component: ClasesComponent, data: {titulo: 'Administracion de clases'}},
+            { path: 'administrarReservas', component: ReservasComponent, data: {titulo: 'Administracion de reservas'}},
             { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
         ]
     },

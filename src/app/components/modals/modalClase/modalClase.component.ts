@@ -27,7 +27,7 @@ export class ModalClaseComponent implements OnInit {
   crearClase(){
     let clase = new Clase(this._modalService.hora.horaInicio,
                           this._modalService.hora.horaFin,
-                          this._modalService.fecha,
+                          new Date(this._modalService.fecha).toISOString(),
                           this.formaC.value.descripcion,
                           this.formaC.value.coach,
                           this.formaC.value.wod);

@@ -1,0 +1,39 @@
+<div class="fondo-negro animated fadeIn" [ngClass]="_modalService.oculto">
+    <div class="modal" style="display: block" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reservas</h5>
+                    <button (click)="_modalService.ocultarModal()" type="button" class="close" aria-label="Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-responsive-md table-hover color-table info-table">
+                        <thead>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Telefono</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let reserva of _modalService.reservas">
+                                <td>{{reserva.usuario.nombre}}</td>
+                                <td>{{reserva.usuario.email}}</td>
+                                <td>{{reserva.usuario.telefono}}</td>
+                                <td>
+                                    <button class="btn btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="_modalService.ocultarModal()" type="button" class="btn btn-secondary">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

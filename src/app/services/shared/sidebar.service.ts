@@ -12,7 +12,8 @@ export class SidebarService {
       submenu: [
         { titulo: 'Administrar Usuarios', url: '/administrarUsuarios' },
         { titulo: 'Administrar Planes', url: '/administrarPlanes' },
-        { titulo: 'Administrar Clases', url: '/administrarClases' }
+        { titulo: 'Administrar Clases', url: '/administrarClases' },
+        { titulo: 'Administrar Reservas', url: '/administrarReservas'}
       ]
     },
     {
