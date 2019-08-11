@@ -57,7 +57,7 @@ export class ModalClaseActualizarComponent implements OnInit {
         swal('Cupo incorrecto', 'El cupo no puede ser inferior a 16', 'error');
       }
     }else{
-      nuevoWod = this._modalService.clase.wod;
+      nuevoCupo = this._modalService.clase.cupo;
     }
 
     let clase = new Clase(this._modalService.clase.horaInicio,
@@ -72,7 +72,10 @@ export class ModalClaseActualizarComponent implements OnInit {
     clase._id = this._modalService.clase._id;
 
     this._claseService.actualizarClase(clase).subscribe(resp =>{
-      this._modalService.notificacion.emit(resp);
+      if(resp.ok){
+        swal('Clase actualizada', '', 'success');
+        this._modalService.notificacion.emit(resp);
+      }
     });
 
     this._modalService.ocultarModal();

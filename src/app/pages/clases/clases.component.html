@@ -6,7 +6,7 @@
                     <h3 class="card-title box-title m-b-20">Clases del {{fechaInicial}} al {{fechaFinal}}</h3>
                 </div>
                 <div class="text-center">
-                    <table class="table table-responsive-md table-hover color-table info-table">
+                    <table class="table table-responsive-md table-hover color-table dark-table">
                         <thead>
                             <th>Hora</th>
                             <th *ngFor="let dia of DIAS" [id]="dia.name">{{dia.name}}</th>
@@ -15,68 +15,68 @@
                             <tr *ngFor="let hora of horas">
                                 <td>{{hora.horaInicio}} - {{hora.horaFin}}</td>
                                 <td>
-                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(1))" *ngIf="validarHoras(hora , '')" class="btn btn-success" [ngClass]="validarClase(hora, DIAS[0], 'crear')">
+                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(1))" *ngIf="validarHoras(hora , '')" class="btn btn-dark" [ngClass]="validarClase(hora, DIAS[0], 'crear')">
                                             <i class=" fa fa-plus"></i>
                                     </button>
-                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[0]))" *ngIf="validarHoras(hora , '') " class="btn btn-info " [ngClass]="validarClase(hora, DIAS[0], 'ver')">
+                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[0]))" *ngIf="validarHoras(hora , '') " class="btn btn-dark " [ngClass]="validarClase(hora, DIAS[0], 'ver')">
                                             <i class="fa fa-search"> {{ buscarClase(hora, DIAS[0]).cupo }}</i>
                                     </button>
-                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[0]))" *ngIf="validarHoras(hora , '') " class="btn btn-danger " [ngClass]="validarClase(hora, DIAS[0], 'ver')">
+                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[0]))" *ngIf="validarHoras(hora , '') " class="btn btn-warning " [ngClass]="validarClase(hora, DIAS[0], 'ver')">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>
                                 <td>
-                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(2)) " *ngIf="validarHoras(hora , '') " class="btn btn-success " [ngClass]="validarClase(hora, DIAS[1], 'crear')">
+                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(2)) " *ngIf="validarHoras(hora , '') " class="btn btn-dark " [ngClass]="validarClase(hora, DIAS[1], 'crear')">
                                             <i class="fa fa-plus"></i>
                                     </button>
-                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[1]))" *ngIf="validarHoras(hora , '') " class="btn btn-info " [ngClass]="validarClase(hora, DIAS[1], 'ver')">
+                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[1]))" *ngIf="validarHoras(hora , '') " class="btn btn-dark " [ngClass]="validarClase(hora, DIAS[1], 'ver')">
                                             <i class="fa fa-search "> {{ buscarClase(hora, DIAS[1]).cupo }}</i>
                                     </button>
-                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[1]))" *ngIf="validarHoras(hora , '') " class="btn btn-danger " [ngClass]="validarClase(hora, DIAS[1], 'ver')">
+                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[1]))" *ngIf="validarHoras(hora , '') " class="btn btn-warning " [ngClass]="validarClase(hora, DIAS[1], 'ver')">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>
                                 <td>
-                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(3)) " *ngIf="validarHoras(hora , '') " class="btn btn-success " [ngClass]="validarClase(hora, DIAS[2], 'crear')">
+                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(3)) " *ngIf="validarHoras(hora , '') " class="btn btn-dark " [ngClass]="validarClase(hora, DIAS[2], 'crear')">
                                             <i class="fa fa-plus"></i>
                                     </button>
-                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[2]))" *ngIf="validarHoras(hora , '') " class="btn btn-info " [ngClass]="validarClase(hora, DIAS[2], 'ver')">
+                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[2]))" *ngIf="validarHoras(hora , '') " class="btn btn-dark " [ngClass]="validarClase(hora, DIAS[2], 'ver')">
                                             <i class="fa fa-search"> {{ buscarClase(hora, DIAS[2]).cupo }}</i>
                                     </button>
-                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[2]))" *ngIf="validarHoras(hora , '') " class="btn btn-danger " [ngClass]="validarClase(hora, DIAS[2], 'ver')">
+                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[2]))" *ngIf="validarHoras(hora , '') " class="btn btn-warning " [ngClass]="validarClase(hora, DIAS[2], 'ver')">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>
                                 <td>
-                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(4)) " *ngIf="validarHoras(hora , '') " class="btn btn-success " [ngClass]="validarClase(hora, DIAS[3], 'crear')">
+                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(4)) " *ngIf="validarHoras(hora , '') " class="btn btn-dark " [ngClass]="validarClase(hora, DIAS[3], 'crear')">
                                             <i class="fa fa-plus"></i>
                                     </button>
-                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[3]))" *ngIf="validarHoras(hora , '') " class="btn btn-info " [ngClass]="validarClase(hora, DIAS[3], 'ver')">
+                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[3]))" *ngIf="validarHoras(hora , '') " class="btn btn-dark " [ngClass]="validarClase(hora, DIAS[3], 'ver')">
                                             <i class="fa fa-search"> {{ buscarClase(hora, DIAS[3]).cupo }}</i>
                                     </button>
-                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[3]))" *ngIf="validarHoras(hora , '') " class="btn btn-danger" [ngClass]="validarClase(hora, DIAS[3], 'ver')">
+                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[3]))" *ngIf="validarHoras(hora , '') " class="btn btn-warning" [ngClass]="validarClase(hora, DIAS[3], 'ver')">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>
                                 <td>
-                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(5)) " *ngIf="validarHoras(hora , '') " class="btn btn-success" [ngClass]="validarClase(hora, DIAS[4], 'crear')">
+                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(5)) " *ngIf="validarHoras(hora , '') " class="btn btn-dark" [ngClass]="validarClase(hora, DIAS[4], 'crear')">
                                             <i class="fa fa-plus"></i>
                                     </button>
-                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[4]))" *ngIf="validarHoras(hora , '') " class="btn btn-info " [ngClass]="validarClase(hora, DIAS[4], 'ver')">
+                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[4]))" *ngIf="validarHoras(hora , '') " class="btn btn-dark " [ngClass]="validarClase(hora, DIAS[4], 'ver')">
                                             <i class="fa fa-search "> {{ buscarClase(hora, DIAS[4]).cupo }}</i>
                                     </button>
-                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[4]))" *ngIf="validarHoras(hora , '') " class="btn btn-danger" [ngClass]="validarClase(hora, DIAS[4], 'ver')">
+                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[4]))" *ngIf="validarHoras(hora , '') " class="btn btn-warning" [ngClass]="validarClase(hora, DIAS[4], 'ver')">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>
                                 <td>
-                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(6)) " *ngIf="validarHoras(hora , 'sabado') " class="btn btn-success" [ngClass]="validarClase(hora, DIAS[5], 'crear')">
+                                    <button (click)="_modalService.mostrarModal(hora, buscarFecha(6)) " *ngIf="validarHoras(hora , 'sabado') " class="btn btn-dark" [ngClass]="validarClase(hora, DIAS[5], 'crear')">
                                             <i class="fa fa-plus"></i>
                                     </button>
-                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[5]))" *ngIf="validarHoras(hora , 'sabado') " class="btn btn-info " [ngClass]="validarClase(hora, DIAS[5], 'ver')">
+                                    <button (click)="_modalActualizarService.mostrarModal(buscarClase(hora, DIAS[5]))" *ngIf="validarHoras(hora , 'sabado') " class="btn btn-dark " [ngClass]="validarClase(hora, DIAS[5], 'ver')">
                                             <i class="fa fa-search"> {{ buscarClase(hora, DIAS[5]).cupo }}</i>
                                     </button>
-                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[5]))" *ngIf="validarHoras(hora , 'sabado') " class="btn btn-danger " [ngClass]="validarClase(hora, DIAS[5], 'ver')">
+                                    <button (click)="eliminarClase(buscarClase(hora, DIAS[5]))" *ngIf="validarHoras(hora , 'sabado') " class="btn btn-warning " [ngClass]="validarClase(hora, DIAS[5], 'ver')">
                                         <i class="fa fa-trash"></i>
                                     </button>
 

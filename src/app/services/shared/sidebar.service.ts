@@ -17,11 +17,18 @@ export class SidebarService {
       ]
     },
     {
-      titulo: 'Planes',
+      titulo: 'Administracion Ingresos',
       icono: 'mdi mdi-gauge',
       submenu: [
         { titulo: 'Crear plan', url: '/progress'},
         { titulo: 'Ver resultados', url: '/graficas1'}
+      ]
+    },
+    {
+      titulo: 'Reservas',
+      icono: 'mdi mdi-gauge',
+      submenu: [
+        { titulo: 'Clases', url: '/reservasUsuarios'}
       ]
     }
   ];

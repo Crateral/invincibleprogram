@@ -19,15 +19,15 @@ File: scss
 /*Top bar
 *******************/
 .topbar {
-  background: #fff; }
+  background: #FFD200; }
   .topbar .top-navbar .navbar-header .navbar-brand .light-logo {
     display: none; }
   .topbar .top-navbar .navbar-nav > .nav-item > span {
-    color: #398bf7; }
+    color: #FFD200; }
   .topbar .navbar-light .navbar-nav .nav-item > a.nav-link {
-    color: #a6b7bf; }
+    color: #FFD200; }
     .topbar .navbar-light .navbar-nav .nav-item > a.nav-link:hover, .topbar .navbar-light .navbar-nav .nav-item > a.nav-link:focus {
-      color: #242a33 !important; }
+      color: #FFD200 !important; }
 
 .logo-center .topbar .navbar-header {
   text-align: center;
@@ -40,7 +40,7 @@ File: scss
 
 .logo-center .topbar .top-navbar .navbar-header .navbar-brand .light-logo {
   display: inline-block;
-  color: rgba(255, 255, 255, 0.8); }
+  color: rgba(255, 210, 0, 0.8); }
 
 /*******************
 /*General Elements

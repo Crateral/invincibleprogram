@@ -27,14 +27,11 @@ export class ClaseService {
 
   cargarClases(fechaIni: string, fechaFin: string) {
       let url = URL_SERVICIOS + '/busqueda/clase/' + fechaIni + '/' + fechaFin;
-      console.log(url);
       return this.http.get(url);
    }
 
    cargarClasePorFecha(fechaIni: string, hora: string){
-     console.log(new Date(fechaIni).toISOString(), hora);
     let url = URL_SERVICIOS + '/busqueda/clase/dia/' + new Date(fechaIni).toISOString() + '/' + hora;
-    console.log(url);
     return this.http.get(url);
    }
 
@@ -58,8 +55,7 @@ export class ClaseService {
     let url = URL_SERVICIOS + '/clase/' + clase._id + '?token=' + this.token;
 
     return this.http.put(url, clase).map((resp: any) =>{
-      swal('Clase actualizada', '', 'success');
-      return true;
+      return resp;
     });
 
   }

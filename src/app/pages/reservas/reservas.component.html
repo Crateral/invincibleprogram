@@ -19,7 +19,7 @@
                 <div class="tab-content">
                     <div class="tab-pane" *ngFor="let dia of DIAS" [id]="dia.id" role="tabpanel" [ngClass]="{'active': monstrarTab(dia.id)}">
                         <div class="p-20">
-                            <table class="table table-responsive-md table-hover color-table info-table">
+                            <table class="table table-responsive-md table-hover color-table dark-table">
                                 <thead>
                                     <th>Hora</th>
                                     <th># Reservas</th>
@@ -30,10 +30,10 @@
                                         <td>{{hora.horaInicio}} - {{hora.horaFin}}</td>
                                         <td>{{agruparReservasPorHora(reservas, hora.horaInicio)}}</td>
                                         <td>
-                                            <button class="btn btn-success" (click)="_modalCrearService.mostrarModal(hora, dia.fecha)">
+                                            <button class="btn btn-dark" (click)="_modalCrearService.mostrarModal(buscarClase(hora.horaInicio, dia.fecha))">
                                                 <i class="fa fa-plus"></i>
                                             </button>
-                                            <button *ngIf="agruparReservasPorHora(reservas, hora.horaInicio) > 0" class="btn btn-info" (click)="_modalService.mostrarModal(enviarReservas(reservas, hora.horaInicio))">
+                                            <button *ngIf="agruparReservasPorHora(reservas, hora.horaInicio) > 0" class="btn btn-warning" (click)="_modalService.mostrarModal(enviarReservas(reservas, hora.horaInicio))">
                                                 <i class="fa fa-search"></i>
                                             </button>
                                         </td>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalReservaAdmService } from './modalReservaAdm.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ReservaService } from '../../../services/reserva/reserva.service';
+import { Reserva } from 'src/app/models/reserva.model';
 
 @Component({
   selector: 'app-modal-reserva-adm',
@@ -8,16 +10,17 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class ModalReservaAdmComponent implements OnInit {
 
-  formaC: FormGroup;
-
-  constructor(public _modalService: ModalReservaAdmService) { }
+  constructor(public _modalService: ModalReservaAdmService,
+              public _reservaService: ReservaService) { }
 
   ngOnInit() {
-    this.formaC = new FormGroup({
-      nombre: new FormControl(null, Validators.required),
-      valor: new FormControl(null, Validators.required),
-      descripcion: new FormControl(null, null)
+  }
+
+  borrarReserva(reserva: Reserva){
+    this._reservaService.borrarReserva(reserva).subscribe(resp =>{
+      this._modalService.notificacion.emit(resp);
     });
+    this._modalService.ocultarModal();
   }
 
 }

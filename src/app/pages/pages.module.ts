@@ -12,7 +12,6 @@ import { SharedModule } from '../shared/shared.module';
 import { PAGES_ROUTES } from './pages.routes';
 import { IncrementadorComponent } from '../components/incrementador/incrementador.component';
 import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
-import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { RegisterComponent } from './register/register.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { ProfileComponent } from './profile/profile.component';
@@ -26,6 +25,8 @@ import { ModalClaseActualizarComponent } from '../components/modals/modalClase/m
 import { ReservasComponent } from './reservas/reservas.component';
 import { ModalReservaAdmComponent } from '../components/modals/modalReservaAdm/modalReservaAdm.component';
 import { ModalReservaAdmCrearComponent } from '../components/modals/modalReservaAdm/modalReservaAdmCrear.component';
+import { ReservasUsuarioComponent } from './reservasUsuario/reservasUsuario.component';
+import { ModalClaseUsuarioComponent } from '../components/modals/modalClaseUsuario/modalClaseUsuario.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,6 @@ import { ModalReservaAdmCrearComponent } from '../components/modals/modalReserva
         Graficas1Component,
         IncrementadorComponent,
         GraficoDonaComponent,
-        AccountSettingsComponent,
         RegisterComponent,
         ProfileComponent,
         PlanesComponent,
@@ -46,7 +46,9 @@ import { ModalReservaAdmCrearComponent } from '../components/modals/modalReserva
         ModalClaseActualizarComponent,
         ReservasComponent,
         ModalReservaAdmComponent,
-        ModalReservaAdmCrearComponent
+        ModalReservaAdmCrearComponent,
+        ReservasUsuarioComponent,
+        ModalClaseUsuarioComponent
     ],
     exports: [
         PagesComponent,

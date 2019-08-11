@@ -122,7 +122,7 @@ export class ClasesComponent implements OnInit {
 
       fechaTempIni.setDate(fechaTempIni.getDate() - 2);
       this.fechaInicial = fechaTempIni.getDate();
-      fechaTempFin.setDate(fechaTempIni.getDate() + 3);
+      fechaTempFin.setDate(fechaTempIni.getDate() + 5);
       this.fechaFinal = fechaTempFin.getDate();
 
       //CarcgarFechasADias

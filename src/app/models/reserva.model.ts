@@ -5,7 +5,7 @@ export class Reserva {
     constructor(
         public usuario: Usuario,
         public clase: Clase,
-        public fecha: string,
+        public fechaReserva: string,
         public _id?: string
     ) {
     }

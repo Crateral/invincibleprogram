@@ -1,11 +1,10 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Hora } from 'src/app/models/hora.model';
 import { Clase } from 'src/app/models/clase.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ModalClaseActualizarService {
+export class ModalClaseUsuarioService {
 
   oculto: string = 'oculto';
 
@@ -27,4 +26,3 @@ export class ModalClaseActualizarService {
     this.oculto = '';
   }
 }
-

@@ -9,7 +9,7 @@
             </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-responsive-md table-hover color-table info-table">
+                    <table class="table table-responsive-md table-hover color-table dark-table">
                         <thead>
                             <th>Nombre</th>
                             <th>Email</th>
@@ -22,7 +22,7 @@
                                 <td>{{reserva.usuario.email}}</td>
                                 <td>{{reserva.usuario.telefono}}</td>
                                 <td>
-                                    <button class="btn btn-danger">
+                                    <button class="btn btn-warning" (click)="borrarReserva(reserva)">
                                     <i class="fa fa-trash"></i>
                                 </button>
                                 </td>
@@ -31,7 +31,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button (click)="_modalService.ocultarModal()" type="button" class="btn btn-secondary">Cerrar</button>
+                    <button (click)="_modalService.ocultarModal()" type="button" class="btn btn-dark">Cerrar</button>
                 </div>
             </div>
         </div>

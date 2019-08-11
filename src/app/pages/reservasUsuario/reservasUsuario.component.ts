@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { ReservaService } from '../../services/reserva/reserva.service';
-import { Reserva } from '../../models/reserva.model';
+import { HoraService } from '../../services/hora/hora.service';
 import { Hora } from 'src/app/models/hora.model';
-import { HoraService } from 'src/app/services/hora/hora.service';
-import { ModalReservaAdmService } from '../../components/modals/modalReservaAdm/modalReservaAdm.service';
-import { ModalReservaAdmCrearService } from '../../components/modals/modalReservaAdm/modalReservaAdmCrear.service';
-import { ClaseService } from '../../services/clase/clase.service';
 import { Clase } from 'src/app/models/clase.model';
+import { ClaseService } from '../../services/clase/clase.service';
+import { ReservaService } from '../../services/reserva/reserva.service';
+import swal from 'sweetalert';
+import { Reserva } from 'src/app/models/reserva.model';
+import { Usuario } from 'src/app/models/usuario.model';
+import { ModalClaseUsuarioService } from '../../components/modals/modalClaseUsuario/modalClaseUsuario.service';
 
-declare function init_plugins();
 
 @Component({
-  selector: 'app-reservas',
-  templateUrl: './reservas.component.html',
+  selector: 'app-reservas-usuario',
+  templateUrl: './reservasUsuario.component.html',
   styles: []
 })
-export class ReservasComponent implements OnInit {
+export class ReservasUsuarioComponent implements OnInit {
 
   DIAS = [
     {id: 1, name: 'Lunes', fecha: ''},
@@ -26,101 +26,26 @@ export class ReservasComponent implements OnInit {
     {id: 6, name: 'Sabado', fecha: ''}
 ];
 
-id: number = 1;
+  fechaInicial: number;
+  fechaFinal: number;
 
-fecha = new Date();
+  horas: Hora[] = [];
+  clases: Clase[] = [];
+  reservas: Reserva[] = [];
 
-clase: Clase;
+  mostrar: string = 'oculto';
 
-clases: Clase[];
+  constructor(public _horaService: HoraService,
+              public _claseService: ClaseService,
+              public _reservasService: ReservaService,
+              public _modalService: ModalClaseUsuarioService){
+              } 
 
-diaActual: number;
-
-reservas: Reserva[] = new Array();
-
-    reservas6: Reserva[] = new Array();
-    reservas7: Reserva[] = new Array();
-    reservas8: Reserva[] = new Array();
-    reservas9: Reserva[] = new Array();
-    reservas10: Reserva[] = new Array();
-    reservas16: Reserva[] = new Array();
-    reservas17: Reserva[] = new Array();
-    reservas18: Reserva[] = new Array();
-    reservas19: Reserva[] = new Array();
-    reservas20: Reserva[] = new Array();
-    reservas830: Reserva[] = new Array();
-    reservas930: Reserva[] = new Array();
-    reservas1030: Reserva[] = new Array();
-
-fechaInicial: number;
-fechaFinal: number;
-
-horas: Hora[] = [];
-
-  constructor(public _reservaService: ReservaService,
-              public _horaService: HoraService,
-              public _modalService: ModalReservaAdmService,
-              public _modalCrearService: ModalReservaAdmCrearService,
-              public _claseService: ClaseService) { }
-
-  ngOnInit() {
-    init_plugins();
-    //this.fecha.setDate(this.fecha.getDate() + 1)
-    let fechaTmp =this.obtenerFechaActual();
+  ngOnInit(): void {
     this.calcularFechas();
     this.cargarHoras();
     this.cargarClases();
-    for (const dia of this.DIAS) {
-      if(dia.fecha === fechaTmp){
-        console.log(dia.id);
-        this.obtenerReservasPorFecha(dia.id, fechaTmp);
-        this.diaActual = dia.id;
-        break;
-      }
-    }
-
-    this._modalCrearService.notificacion.subscribe( (resp: any) => {
-      this.calcularFechas();
-      this.cargarHoras();
-      this.cargarClases();
-      let fecha = resp.fechaReserva;
-      for (const dia of this.DIAS) {
-        if(new Date(dia.fecha).toISOString() === fecha){
-          this.obtenerReservasPorFecha(dia.id, fecha);
-          this.diaActual = dia.id;
-          break;
-        }
-      }
-    });
-
-    this._modalService.notificacion.subscribe((resp: any) => {
-      this.calcularFechas();
-      this.cargarHoras();
-      this.cargarClases();
-      let fecha = resp.reserva.fechaReserva;
-      for (const dia of this.DIAS) {
-        if(new Date(dia.fecha).toISOString() === fecha){
-          this.obtenerReservasPorFecha(dia.id, fecha);
-          this.diaActual = dia.id;
-          break;
-        }
-      }
-    });
-  }
-
-  obtenerReservasPorFecha(id: number, fecha: string){
-    this._reservaService.cargarReservasPorFecha(fecha)
-                        .subscribe((resp: any) =>{
-                            this.reservas = resp.reservas;
-                            this.agruparReservasPorHora(this.reservas);
-                          });
-  }
-
-  monstrarTab(id){
-    if(this.id === id){
-      return true;
-    }
-    return false;
+    this.cargarReservas(localStorage.getItem('id'));
   }
 
   calcularFechas(){
@@ -141,7 +66,7 @@ horas: Hora[] = [];
       this.fechaFinal = fechaTempFin.getDate();
 
       //CarcgarFechasADias
-      console.log('FECHA ACTUAL: ', new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' +  new Date().getFullYear());
+      console.log('FECHA ACTUAL: ', new Date().getDate() + '/' + new Date().getMonth()+1 + '/' +  new Date().getFullYear());
 
       martes.setDate(new Date().getDate() + 1);
       miercoles.setDate(new Date().getDate() + 2);
@@ -348,9 +273,42 @@ horas: Hora[] = [];
                             this.horas = resp.horas;
                           });
   }
+ 
+  validarHoras(hora: Hora, dia: string){
+    if (dia === 'sabado') {
+      if (hora.horaInicio === '8:30'){
+        return true;
+      } else if (hora.horaInicio === '9:30') {
+        return true;
+      } else if (hora.horaInicio === '10:30') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if (hora.horaInicio === '8:30') {
+        return false;
+      } else if (hora.horaInicio === '9:30') {
+        return false;
+      } else if (hora.horaInicio === '10:30') {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
+  cargarClases() {
+    this._claseService.cargarClases(this.DIAS[0].fecha, this.DIAS[5].fecha)
+                          .subscribe((resp: any) =>{
+                            this.clases = resp.clases;
+                          });
+  }
 
   cargarFechaEnDia(fechas: any[]){
     for (let i = 0; i < this.DIAS.length; i++) {
+
+      //console.log(fechas[i]);
       if(fechas[i].mes <= 9){
         if(fechas[i].dia <= 9){
           this.DIAS[i].fecha = fechas[i].anio + '-' + 0+fechas[i].mes + '-' + 0+fechas[i].dia;
@@ -367,101 +325,129 @@ horas: Hora[] = [];
     }
   }
 
-  agruparReservasPorHora(reservas: Reserva[], horaInicio?: string){
-
-    let numeroReserva: number = 0;
-
-    this.reservas6 = new Array();
-    this.reservas7 = new Array();
-    this.reservas8 = new Array();
-    this.reservas9 = new Array();
-    this.reservas10 = new Array();
-    this.reservas16 = new Array();
-    this.reservas17 = new Array();
-    this.reservas18 = new Array();
-    this.reservas19 = new Array();
-    this.reservas20 = new Array();
-    this.reservas830 =  new Array();
-    this.reservas930 =  new Array();
-    this.reservas1030 =  new Array();
-
-    //console.log(reservas);
-
-    for (const reserva of reservas) {
-      if (reserva.clase.horaInicio === horaInicio) {
-        this.reservas6.push(reserva);
-        numeroReserva = this.reservas6.length;
-      } else if (reserva.clase.horaInicio === horaInicio){
-        this.reservas7.push(reserva);
-        numeroReserva = this.reservas7.length;
-      } else if (reserva.clase.horaInicio === horaInicio){
-        this.reservas8.push(reserva);
-        numeroReserva = this.reservas8.length;
-      } else if (reserva.clase.horaInicio === horaInicio){
-        this.reservas9.push(reserva);
-        numeroReserva = this.reservas9.length;
-      } else {
-        numeroReserva = 0;
+  buscarFecha(dia: number){
+    for (let i = 0; i < this.DIAS.length; i++) {
+      if(this.DIAS[i].id === dia){
+        return this.DIAS[i].fecha;
       }
     }
-    return numeroReserva;
   }
 
-  enviarReservas(reservas: Reserva[], horaInicio?: string){
-    let reservaFinal = new Array();
-
-    for (const reserva of reservas) {
-      if (reserva.clase.horaInicio === horaInicio) {
-        reservaFinal.push(reserva);
+  existeClase(hora: Hora, dia: any){
+    let mostrar = 'oculto';
+    for (const clase of this.clases) {
+      if (clase.fecha.substring(0, 10) === dia.fecha
+        && clase.horaInicio === hora.horaInicio
+        && clase.horaFinal === hora.horaFin)
+      {
+        mostrar = '';
       }
     }
-    return reservaFinal;
+    return mostrar;
   }
 
-  cargarClases() {
-    this._claseService.cargarClases(this.DIAS[0].fecha, this.DIAS[5].fecha)
-                          .subscribe((resp: any) =>{
-                            console.log(this.DIAS[0].fecha, this.DIAS[5].fecha);
-                            this.clases = resp.clases;
-                          });
-  }
-
-  buscarClase(horaInicio: string, fecha: string){
-
-    let fechaTmp = new Date(fecha).toISOString();
+  buscarClase(hora: Hora, dia: any){
 
     for (const clase of this.clases) {
-      if(clase.horaInicio === horaInicio
-        && clase.fecha === fechaTmp){
-        this.clase = clase;
-        break;
-      }else{
-        this.clase = new Clase(null, null, null, null, null, null);
+      if(clase.fecha.substring(0, 10) === dia.fecha
+        && clase.horaInicio === hora.horaInicio
+        && clase.horaFinal === hora.horaFin)
+      {
+        return clase;
       }
     }
-    return this.clase;
+    return new Clase(null, null, null, null, null, null, null);
   }
 
-  obtenerFechaActual(){
+  eliminarClase(clase: Clase){
 
-    let fecha;
+    this._claseService.borrarClase(clase).subscribe( resp => {
+      this.cargarClases();
+    });
+    
+  }
 
-    if(this.fecha.getMonth() < 10){
-      if(this.fecha.getDate() < 10){
-        fecha = this.fecha.getFullYear() + '-' + 0 + (this.fecha.getMonth() + 1) + '-' +  0 + this.fecha.getDate();
-        return fecha;
-      }else{
-        fecha = this.fecha.getFullYear() + '-' + 0 + (this.fecha.getMonth() + 1) + '-' +  this.fecha.getDate();
-        return fecha;
+  cargarReservas(idUsuario: string){
+    this._reservasService.consultarReservasPorUsuario(idUsuario).subscribe( resp => {
+      this.reservas = resp.reservas;
+    });
+  }
+
+  validarCupo(hora: Hora, dia: any){
+
+    let flag: Boolean;
+    const clase = this.buscarClase(hora, dia);
+    if(clase.cupo <= 0){
+      flag = true;
+    } else {
+      //console.log(this.reservas);
+      if(this.reservas.length > 0){
+        for (const reserva of this.reservas) {
+         if(clase._id === reserva.clase._id){
+            flag = true;
+            break;
+         }else{
+            flag = false;
+            //break;
+          }
+        }
       }
-    }else{
-      if(this.fecha.getDate() < 10){
-        fecha = this.fecha.getFullYear() + '-' + (this.fecha.getMonth() + 1) + '-' +  0 + this.fecha.getDate();
-        return fecha;
+    }
+
+    return flag;
+  }
+
+  reservar(hora: Hora, dia: any){
+
+    const clase = this.buscarClase(hora, dia);
+    const usuario = new Usuario(null, null, null, null, null, null, null, null, null, null, null,
+                              null, null, null, null, null, null, null, null, null,
+                              localStorage.getItem('id'));
+
+    const reserva = new Reserva(usuario, clase, clase.fecha);
+    clase.cupo = clase.cupo - 1;
+
+    this._reservasService.crearReserva(reserva).subscribe( resp => {
+      console.log(resp);
+      if(resp.ok){
+        this._claseService.actualizarClase(clase).subscribe(resp =>{
+          if(resp){
+            this.calcularFechas();
+            this.cargarHoras();
+            this.cargarClases();
+            this.cargarReservas(localStorage.getItem('id'));
+          }
+        });
       }else{
-        fecha = this.fecha.getFullYear() + '-' + (this.fecha.getMonth() + 1) + '-' +  this.fecha.getDate();
-        return fecha;
+        swal('No se pudo realizar la reserva', 'Por favor contactese con el administrador', 'error');
+      }
+    });
+  }
+
+  cancelarReserva(hora: Hora, dia: any){
+
+    const clase = this.buscarClase(hora, dia);
+    let uno: number = 1;
+    let cupo: number = Number.parseInt(clase.cupo.toString());;
+    clase.cupo = cupo + uno;
+    for (const reserva of this.reservas) {
+      if(clase._id === reserva.clase._id){
+        this._reservasService.borrarReserva(reserva).subscribe( resp => {
+          if(resp.ok){
+            this._claseService.actualizarClase(clase).subscribe(resp =>{
+              if(resp){
+                this.calcularFechas();
+                this.cargarHoras();
+                this.cargarClases();
+                this.cargarReservas(localStorage.getItem('id'));
+              }
+            });
+          }else{
+            swal('No se pudo cancelar la reserva', 'Por favor contactese con el administrador', 'error');
+          }
+        });
       }
     }
   }
+
 }
