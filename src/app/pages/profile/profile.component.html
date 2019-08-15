@@ -2,52 +2,86 @@
     <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Perfil del Usuario</h4>
-                <h6 class="card-subtitle">{{usuario.nombre}}</h6>
-                <form ngNativeValidate #f="ngForm" (ngSubmit)="guardarPerfil(f.value)" class="form p-t-20">
+                <form ngNativeValidate [formGroup]="formaC" class="form p-t-20">
+                    <h4 class="card-title">Perfil del Usuario</h4>
                     <div class="form-group">
-                        <label for="exampleInputuname">Nombre de usuario</label>
+                        <label>Nombre de usuario</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="ti-user"></i></div>
-                            <input [ngModel]="usuario.nombre" name="nombre" type="text" class="form-control" id="exampleInputuname" placeholder="Nombre de usuario" required>
+                            <input formControlName="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre de usuario" [value]="usuario.nombre" required>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="usuario.role === 'USER_ROLE'">
+                        <label>Cedula</label>
+                        <div class="input-group">
+                            <input formControlName="cedula" name="cedula" class="form-control" type="number" placeholder="Cedula" [value]="usuario.cedula" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Correo</label>
+                        <div class="col-xs-12">
+                            <label>Correo</label>
+                            <div class="input-group">
+                                <input formControlName="email" name="email" type="email" class="form-control" placeholder="Correo" [value]="usuario.email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="usuario.role === 'USER_ROLE'">
+                        <label>Telefono</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="ti-email"></i></div>
-                            <input [ngModel]="usuario.email" name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Correo">
+                            <input formControlName="telefono" name="telefono" type="text" class="form-control" placeholder="Telefono" [value]="usuario.telefono" required>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="usuario.role === 'USER_ROLE'">
+                        <label>Direccion</label>
+                        <div class="input-group">
+                            <input formControlName="direccion" name="direccion" type="text" class="form-control" placeholder="Direccion" [value]="usuario.direccion" required>
+                        </div>
+                    </div>
+                    <div class="form-group " *ngIf="usuario.role === 'USER_ROLE'">
+                        <div class="col-xs-12">
+                            <label>Fecha Naciemiento</label>
+                            <div class="input-group">
+                                <input formControlName="fechaNacimiento" name="fechaNacimiento" type="date" class="form-control" placeholder="dd/mm/aaaa" [value]="usuario.fechaNacimiento">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="usuario.role === 'USER_ROLE'">
+                        <label>RH</label>
+                        <div class="input-group">
+                            <input formControlName="rh" name="rh" type="text" class="form-control" placeholder="RH" [value]="usuario.rh" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="pwd1">Contraseña</label>
+                        <label>Contraseña</label>
                         <div class="input-group">
-                            <div class="input-group-addon"><i class="ti-lock"></i></div>
-                            <input [ngModel]="usuario.password" name="password" type="password" class="form-control" id="pwd1" placeholder="Contraseña">
+                            <input formControlName="password" name="password" class="form-control" type="password" placeholder="Nueva contraseña">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10">
-                      <i class="fa fa-save"></i>
+
+                    <div class="form-group " *ngIf="usuario.role === 'USER_ROLE'">
+                        <label>Contacto Emergencia</label>
+                        <div class="input-group">
+                            <input formControlName="nombreContacto" name="nombreContacto" type="text" class="form-control" placeholder="Nombre de contacto" [value]="usuario.nombreContacto" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group" *ngIf="usuario.role === 'USER_ROLE'">
+                        <label>Telefono Contacto Emergencia</label>
+                        <div class="input-group">
+                            <input formControlName="telefonoContacto" name="telefonoContacto" type="text" class="form-control" placeholder="Telefono de contacto" [value]="usuario.telefonoContacto" required>
+                        </div>
+                    </div>
+                    <button (click)="guardarPerfil(usuario)" type="submit" class="btn btn-dark waves-effect waves-light m-r-10">
                       Guardar</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-lg-6" *ngIf="usuario.role === 'USER_ROLE'">
         <div class="card">
-            <div class="card-body" align="center">
-                <h4 class="card-title">Fotografia del Usuario</h4>
-                <h6 class="card-subtitle">{{usuario.nombre}}</h6>
-                <img *ngIf="!imagenTemp" [src]="usuario.img | imagen" class="w150">
-                <img *ngIf="imagenTemp" [src]="imagenTemp" class="w150">
-                <div class="form-group">
-                    <input (change)="seleccionImagen($event.target.files[0])" type="file">
-                </div>
-                <button (click)="cambiarImagen()" [disabled]="!imagenSubir" type="button" class="btn btn-success waves-effect waves-light m-r-10">
-                        <i class="fa fa-save"></i>
-                        Actualizar foto
-                </button>
+            <div class="card-body">
+                <h4 class="card-title">Benchmarks</h4>
+                <h4 class="card-title">Pronto podras llevar aqui tus RMs y benchmarks...</h4>
             </div>
         </div>
     </div>

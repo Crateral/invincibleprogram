@@ -24,6 +24,5 @@ export class ModalReservaAdmService {
   mostrarModal(reservas: Reserva[]){
     this.oculto = '';
     this.reservas = reservas;
-    console.log(this.reservas);
   }
 }

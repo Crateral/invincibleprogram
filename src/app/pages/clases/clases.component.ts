@@ -5,6 +5,7 @@ import { Clase } from 'src/app/models/clase.model';
 import { ModalClaseService } from '../../components/modals/modalClase/modalClase.service';
 import { ClaseService } from '../../services/clase/clase.service';
 import { ModalClaseActualizarService } from '../../components/modals/modalClase/modalClaseActualizar.service';
+import { UsuarioService } from '../../services/usuario/usuario.service';
 
 @Component({
   selector: 'app-clases',
@@ -30,10 +31,12 @@ export class ClasesComponent implements OnInit {
   constructor(public _horaService: HoraService,
               public _modalService: ModalClaseService,
               public _modalActualizarService: ModalClaseActualizarService,
-              public _claseService: ClaseService){
+              public _claseService: ClaseService,
+              public _usuarioService: UsuarioService){
               } 
 
   ngOnInit(): void {
+    this._usuarioService.paginaActual = 'Administrar Clases';
     this.calcularFechas();
     this.cargarHoras();
     this.cargarClases();

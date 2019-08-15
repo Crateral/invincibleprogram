@@ -1,0 +1,35 @@
+<div class="row animated fadeIn text-center">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <form class="form p-t-20" action="index.html">
+                    <h3 class="card-title box-title m-b-20"><b>Informacion del Plan</b></h3>
+                    <div>
+                        <label><b>Nombre del plan</b></label>
+                    </div>
+                    <div>
+                        <label>{{_usuarioService.usuario.plan.nombre}}</label>
+                    </div>
+                    <div>
+                        <label><b>Descripción</b></label>
+                    </div>
+                    <div>
+                        <label>{{_usuarioService.usuario.plan.descripcion}}</label>
+                    </div>
+                    <div>
+                        <label><b>Fecha Incio Plan</b></label>
+                    </div>
+                    <div>
+                        <label>{{_usuarioService.usuario.fechaInicioPlan.substring(0,10)}}</label>
+                    </div>
+                    <div>
+                        <label><b>Fecha Fin Plan</b></label>
+                    </div>
+                    <div>
+                        <label>{{_usuarioService.usuario.fechaFinPlan.substring(0,10)}}</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

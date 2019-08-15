@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { ReservaService } from '../../services/reserva/reserva.service';
-import { Reserva } from '../../models/reserva.model';
-import { Hora } from 'src/app/models/hora.model';
-import { HoraService } from 'src/app/services/hora/hora.service';
-import { ModalReservaAdmService } from '../../components/modals/modalReservaAdm/modalReservaAdm.service';
-import { ModalReservaAdmCrearService } from '../../components/modals/modalReservaAdm/modalReservaAdmCrear.service';
-import { ClaseService } from '../../services/clase/clase.service';
 import { Clase } from 'src/app/models/clase.model';
-import { UsuarioService } from '../../services/usuario/usuario.service';
+import { Reserva } from 'src/app/models/reserva.model';
+import { Hora } from 'src/app/models/hora.model';
+import { ClaseService } from 'src/app/services/clase/clase.service';
+import { HoraService } from 'src/app/services/hora/hora.service';
+import { ReservaService } from 'src/app/services/reserva/reserva.service';
+import { ModalReservaAdmService } from 'src/app/components/modals/modalReservaAdm/modalReservaAdm.service';
+import { UsuarioService } from 'src/app/services/service.index';
 
 declare function init_plugins();
 
 @Component({
-  selector: 'app-reservas',
-  templateUrl: './reservas.component.html',
+  selector: 'app-reservas-coach',
+  templateUrl: './reservasCoach.component.html',
   styles: []
 })
-export class ReservasComponent implements OnInit {
+export class ReservasCoachComponent implements OnInit {
 
   DIAS = [
     {id: 1, name: 'Lunes', fecha: ''},
@@ -60,14 +59,13 @@ horas: Hora[] = [];
 
   constructor(public _reservaService: ReservaService,
               public _horaService: HoraService,
-              public _modalService: ModalReservaAdmService,
-              public _modalCrearService: ModalReservaAdmCrearService,
               public _claseService: ClaseService,
+              public _modalService: ModalReservaAdmService,
               public _usuarioService: UsuarioService) { }
 
   ngOnInit() {
     init_plugins();
-    this._usuarioService.paginaActual = 'Administrar Reservas';
+    this._usuarioService.paginaActual = 'Reservas';
     let fechaTmp =this.obtenerFechaActual();
     this.calcularFechas();
     this.cargarHoras();
@@ -80,34 +78,6 @@ horas: Hora[] = [];
         break;
       }
     }
-
-    this._modalCrearService.notificacion.subscribe( (resp: any) => {
-      this.calcularFechas();
-      this.cargarHoras();
-      this.cargarClases();
-      let fecha = resp.fechaReserva;
-      for (const dia of this.DIAS) {
-        if(new Date(dia.fecha).toISOString() === fecha){
-          this.obtenerReservasPorFecha(dia.id, fecha);
-          this.diaActual = dia.id;
-          break;
-        }
-      }
-    });
-
-    this._modalService.notificacion.subscribe((resp: any) => {
-      this.calcularFechas();
-      this.cargarHoras();
-      this.cargarClases();
-      let fecha = resp.reserva.fechaReserva;
-      for (const dia of this.DIAS) {
-        if(new Date(dia.fecha).toISOString() === fecha){
-          this.obtenerReservasPorFecha(dia.id, fecha);
-          this.diaActual = dia.id;
-          break;
-        }
-      }
-    });
   }
 
   obtenerReservasPorFecha(id: number, fecha: string){

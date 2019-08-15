@@ -23,11 +23,12 @@ export class PlanesComponent implements OnInit {
   cargando: boolean = true;
 
   constructor(public _planService: PlanService,
-              public _modalService: ModalPlanService) { }
+              public _modalService: ModalPlanService,
+              public _usuarioService: UsuarioService) { }
 
   ngOnInit() {
     init_plugins();
-
+    this._usuarioService.paginaActual = 'Administrar Planes';
     this.formaC = new FormGroup({
       nombre: new FormControl(null, Validators.required),
       valor: new FormControl(null, Validators.required),

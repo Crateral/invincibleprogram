@@ -10,10 +10,13 @@ import { Reserva } from 'src/app/models/reserva.model';
 })
 export class ModalReservaAdmComponent implements OnInit {
 
+  role: string;
+
   constructor(public _modalService: ModalReservaAdmService,
               public _reservaService: ReservaService) { }
 
   ngOnInit() {
+    this.role = localStorage.getItem('role');
   }
 
   borrarReserva(reserva: Reserva){

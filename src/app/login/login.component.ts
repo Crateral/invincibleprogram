@@ -38,7 +38,10 @@ export class LoginComponent implements OnInit {
 
     let usuario = new Usuario(null, forma.value.email, forma.value.password, null, null, null, null, null, null, null, null, null);
     
-    this._usuarioService.login(usuario, forma.value.recuerdame).subscribe(resp=> this.router.navigate(['/dashboard']));
+    this._usuarioService.login(usuario, forma.value.recuerdame)
+                        .subscribe(
+                          resp=> this.router.navigate(['/dashboard'])
+                        );
   }
 
 }

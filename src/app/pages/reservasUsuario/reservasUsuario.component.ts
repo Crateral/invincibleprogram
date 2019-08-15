@@ -8,6 +8,7 @@ import swal from 'sweetalert';
 import { Reserva } from 'src/app/models/reserva.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { ModalClaseUsuarioService } from '../../components/modals/modalClaseUsuario/modalClaseUsuario.service';
+import { UsuarioService } from 'src/app/services/service.index';
 
 
 @Component({
@@ -38,10 +39,13 @@ export class ReservasUsuarioComponent implements OnInit {
   constructor(public _horaService: HoraService,
               public _claseService: ClaseService,
               public _reservasService: ReservaService,
-              public _modalService: ModalClaseUsuarioService){
+              public _modalService: ModalClaseUsuarioService,
+              public _usuarioService: UsuarioService){
               } 
 
   ngOnInit(): void {
+
+    this._usuarioService.paginaActual = 'Reserva y Clases';
     this.calcularFechas();
     this.cargarHoras();
     this.cargarClases();

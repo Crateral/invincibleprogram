@@ -27,6 +27,8 @@ import { ModalReservaAdmComponent } from '../components/modals/modalReservaAdm/m
 import { ModalReservaAdmCrearComponent } from '../components/modals/modalReservaAdm/modalReservaAdmCrear.component';
 import { ReservasUsuarioComponent } from './reservasUsuario/reservasUsuario.component';
 import { ModalClaseUsuarioComponent } from '../components/modals/modalClaseUsuario/modalClaseUsuario.component';
+import { ReservasCoachComponent } from './reservasCoach/reservasCoach.component';
+import { PlanUsuarioComponent } from './planUsuario/planUsuario.component';
 
 @NgModule({
     declarations: [
@@ -48,7 +50,9 @@ import { ModalClaseUsuarioComponent } from '../components/modals/modalClaseUsuar
         ModalReservaAdmComponent,
         ModalReservaAdmCrearComponent,
         ReservasUsuarioComponent,
-        ModalClaseUsuarioComponent
+        ModalClaseUsuarioComponent,
+        ReservasCoachComponent,
+        PlanUsuarioComponent
     ],
     exports: [
         PagesComponent,

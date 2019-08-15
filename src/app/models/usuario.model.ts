@@ -18,10 +18,10 @@ export class Usuario {
         public totalValorPlan?: number,
         public img?: string,
         public fechaInscripcion?: string,
-        public fechaIncioPlan?: string,
+        public fechaInicioPlan?: string,
         public fechaFinPlan?: string,
         public estado?: string,
-        public rol?: string,
+        public role?: string,
         public _id?: string
     ) {
     }

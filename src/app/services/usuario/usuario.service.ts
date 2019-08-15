@@ -15,6 +15,9 @@ export class UsuarioService{
 
     token: string;
     usuario: Usuario;
+    menu: any;
+    role: string;
+    paginaActual: string;
 
   constructor(public http: HttpClient,
               public ruter:Router,
@@ -26,22 +29,30 @@ export class UsuarioService{
       return (this.token.length > 5) ? true : false;
     }
 
-    guardarStorage( id: string, token: string, usuario: Usuario){
+    guardarStorage( id: string, token: string, usuario: Usuario, menu: any){
       localStorage.setItem('id', id);
       localStorage.setItem('token', token);
       localStorage.setItem('usuario', JSON.stringify(usuario));
+      localStorage.setItem('role', usuario.role);
+      localStorage.setItem('menu', JSON.stringify(menu));
 
       this.usuario = usuario;
       this.token = token;
+      this.menu = menu;
+      this.role = usuario.role;
     }
 
     cargarStorage(){
       if(localStorage.getItem('token')){
         this.token = localStorage.getItem('token');
         this.usuario = JSON.parse(localStorage.getItem('usuario'));
+        this.menu = JSON.parse(localStorage.getItem('menu'));
+        this.role = localStorage.getItem('role');
       }else{
         this.token = '';
         this.usuario = null;
+        this.menu = [];
+        this.role = '';
       }
     }
 
@@ -51,6 +62,8 @@ export class UsuarioService{
     localStorage.removeItem('token');
     localStorage.removeItem('id');
     localStorage.removeItem('usuario');
+    localStorage.removeItem('role');
+    localStorage.removeItem('menu');
     this.ruter.navigate(['/login']);
   }
 
@@ -61,14 +74,12 @@ export class UsuarioService{
     }else{
       localStorage.removeItem('email');
     }
-      
+
     let url = URL_SERVICIOS + '/login';
 
     return this.http.post(url, usuario)
                       .map((resp: any) => {
-                        
-                        this.guardarStorage(resp.id, resp.token, resp.usuario);
-
+                        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
                         return true;
                       });
   }
@@ -85,12 +96,12 @@ export class UsuarioService{
   }
 
   actualizarUsuario(usuario: Usuario){
-    
+
     let url = URL_SERVICIOS + '/usuario/' + usuario._id + '?token=' + this.token;
 
     return this.http.put(url, usuario).map((resp: any) =>{
       if(usuario._id === this.usuario._id){
-        this.guardarStorage(resp.usuario._id, this.token, resp.usuario);
+        this.guardarStorage(resp.usuario._id, this.token, resp.usuario, this.menu);
       }
       swal('Usuario actulizado', '', 'success');
       return true;
@@ -104,7 +115,7 @@ export class UsuarioService{
                               .then((resp: any) =>{
                                 this.usuario.img = resp.usuario.img;
                                 swal('Imagen actualizada', '', 'success');
-                                this.guardarStorage(id,this.token,this.usuario);
+                                this.guardarStorage(id,this.token,this.usuario, this.menu);
                               })
                               .catch(resp =>{
                                 console.log(resp);
@@ -119,8 +130,6 @@ export class UsuarioService{
 
   buscarUsuarios(termino: string){
     let url = URL_SERVICIOS + '/busqueda/usuario/' + termino;
-    
-    console.log("URL: " + url);
 
     return this.http.get(url);
   }

@@ -22,7 +22,7 @@
                                 <td>{{reserva.usuario.email}}</td>
                                 <td>{{reserva.usuario.telefono}}</td>
                                 <td>
-                                    <button class="btn btn-warning" (click)="borrarReserva(reserva)">
+                                    <button *ngIf="role !== 'COACH_ROLE'" class="btn btn-warning" (click)="borrarReserva(reserva)">
                                     <i class="fa fa-trash"></i>
                                 </button>
                                 </td>

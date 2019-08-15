@@ -210,7 +210,6 @@ export class ModalUsuarioComponent implements OnInit {
   }
 
   actualizarDescuento(evento: any){
-    console.log(evento);
     this._modalService.usuario.descuento = evento;
   }
 

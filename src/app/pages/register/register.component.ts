@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     init_plugins();
-
+    this._usuarioService.paginaActual = 'Administrar Usuarios';
     this.formaC = new FormGroup({
       nombre: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
@@ -49,7 +49,9 @@ export class RegisterComponent implements OnInit {
       nombreContacto: new FormControl(null, Validators.required),
       telefonoContacto: new FormControl(null, Validators.required),
       descuento: new FormControl(null, Validators.required),
-      porcentajeDescuento: new FormControl(null, Validators.maxLength(3))
+      porcentajeDescuento: new FormControl(null, Validators.maxLength(3)),
+      otroValor: new FormControl(null, Validators.required),
+      nuevoValorPlan: new FormControl(null, Validators.required)
     });
     
     this._modalService.notificacion.subscribe( (resp: any) => {
@@ -62,9 +64,9 @@ export class RegisterComponent implements OnInit {
   }
 
   cargarStorage(){
-    if(localStorage.getItem('token')){
+    if (localStorage.getItem('token')) {
       this._usuarioService.usuario = JSON.parse(localStorage.getItem('usuario'));
-    }else{
+    } else {
       this._usuarioService.usuario = null;
     }
   }
@@ -78,7 +80,7 @@ export class RegisterComponent implements OnInit {
     let fecha: Date;
     let valor: number;
     fecha = new Date();
-    let fechaFinPlan = fecha.setDate(fecha.getDate() + 30);
+    const fechaFinPlan = fecha.setDate(fecha.getDate() + 30);
 
      for ( let i= 0; i < this.planes.length; i++ ) {
         if (this.planes[i]._id === this.formaC.value.planC){
@@ -87,14 +89,20 @@ export class RegisterComponent implements OnInit {
         }
      }
 
-    if (this.formaC.value.descuento){
+    if (this.formaC.value.descuento) {
       this.porcentajeDescuento = this.formaC.value.porcentajeDescuento;
-      this.totalValorPlan = valor - ((this.porcentajeDescuento/100) * valor);
+      this.totalValorPlan = valor - ((this.porcentajeDescuento / 100) * valor);
     } else {
       this.totalValorPlan = valor;
     }
 
-    let usuario = new Usuario(this.formaC.value.nombre,
+    if (this.formaC.value.otroValor) {
+      this.totalValorPlan = this.formaC.value.nuevoValorPlan;
+    } else {
+      this.totalValorPlan = valor;
+    }
+
+    const usuario = new Usuario(this.formaC.value.nombre,
                                this.formaC.value.email,
                                this.formaC.value.password,
                                this.formaC.value.planC,
@@ -109,8 +117,6 @@ export class RegisterComponent implements OnInit {
                                this.porcentajeDescuento,
                                this.totalValorPlan,
                                );
-
-    
 
     this._usuarioService.crearUsuario(usuario)
                         .subscribe( resp => {
@@ -195,10 +201,10 @@ export class RegisterComponent implements OnInit {
         swal('No puede Inactivar este usuario', 'No se puede inactivar a su mismo usuario.', 'error');
         return;
       } else {
-        
+
         if (usuario.estado === 'ACTIVO'){
           usuario.estado = 'INACTIVO';
-      
+
           this._usuarioService.actualizarUsuario(usuario)
                             .subscribe((resp: any) => {
                               this.cargarUsuarios();
